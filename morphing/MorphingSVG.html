@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Svg Morphing animejs</title>
+
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <h1>Valentin</h1>
+
+    <div class="morph-wrapper">
+      <svg version="1.1" viewBox="0 0 400 400">
+        <path
+          class="morph-svg"
+          d="M .32 96 C 4.32 54 71.32 0 119.32 0 C 167.32 0 159.32 63 173.32 97 C 187.32 131 217.32 174 217.32 207 C 217.32 240 170.32 238 128.32 229 C 86.32 220 66.32 207 48.31999999999999 188 C 30.319999999999993 169 -3.68 138 .32 96 Z "
+        />
+        <defs>
+          <linearGradient id="gradient" x1="19%" y1="100%" x2="81%" y2="0%" >
+          <stop offset="0%" style="stop-color:rgb(110,193,255);stop-opacity:1" />
+          <stop offset="100%" style="stop-color:rgb(139,255,244);stop-opacity:1" />
+          </linearGradient>
+        </defs> 
+      </svg>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.2.0/anime.js"></script>
+
+    <script src="js/index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+body{
+    cursor: none;
+}
+
+h1{
+    position: absolute;
+    margin-left: 50vw;
+    transform: translateX(-50%)
+}

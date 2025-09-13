@@ -1,0 +1,35 @@
+body{
+  margin: 0;
+}
+
+h1{
+  line-height: 100vh;
+  text-align: center;
+  position: absolute;
+  margin: 0;
+  margin-left: 50vw;
+  transform: translateX(-50%);
+  font-size: 5em;
+  color: #fff;
+  z-index: 100;
+}
+
+.morph-wrapper {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+svg{
+  width: 600px;
+  margin: 0 auto;
+
+  margin-left: 50vw;
+  margin-top: 50vh;
+  transform: translateX(-50%) translateY(-50%);
+}
+.morph-svg {
+  transform: translate(5px, 5px);
+  width: 250px;
+  fill: url(#gradient);
+  filter:drop-shadow(2px 2px 4px rgba(44, 44, 44, 0.12) )
+}

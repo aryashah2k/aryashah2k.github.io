@@ -1,0 +1,2 @@
+    var defaultMargin = browser.supportsTouch || browser.supportsPointerEvent ? 20 : 10;
+										//mettre 5
