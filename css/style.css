@@ -27,6 +27,13 @@ body {
 .blog-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 6px; background: #1c1430; }
 .blog-card h3 { margin: 10px 0 6px; font-size: 18px; }
 .blog-card p { margin: 0; color: #b6a9d8; }
+/* Ensure blog card text wraps and no typing animation applies */
+.blog-card h3,
+.blog-card p {
+  white-space: normal;
+  overflow: visible;
+  animation: none;
+}
 
 @media (max-width: 900px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px) { .blog-grid { grid-template-columns: 1fr; } }
@@ -37,6 +44,35 @@ body {
 .post pre { background: #1c1430; padding: 10px; border-radius: 6px; overflow: auto; }
 .post code { background: #1c1430; padding: 2px 4px; border-radius: 4px; }
 .post a { text-decoration: underline; }
+/* Ensure blog content wraps and is readable (override global typing styles) */
+.post p,
+.post li,
+.post blockquote,
+.post h1,
+.post h2,
+.post h3,
+.post h4,
+.post h5,
+.post h6 {
+  white-space: normal;
+  overflow: visible;
+  animation: none;
+}
+.post p,
+.post li {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.post img,
+.post video,
+.post iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 12px auto;
+  border-radius: 6px;
+  background: #1c1430;
+}
 .header-actions { display: inline-flex; gap: 8px; align-items: center; }
 .exit-btn {
   display: none;

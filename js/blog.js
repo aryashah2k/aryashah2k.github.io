@@ -21,10 +21,28 @@
       // Configure marked
       marked.setOptions({
         breaks: true,
-        gfm: true
+        gfm: true,
+        headerIds: true,
+        mangle: false
       });
       const html = marked.parse(md);
       container.innerHTML = DOMPurify.sanitize(html);
+
+      // Fix GitHub blob image URLs to raw URLs so they load correctly
+      container.querySelectorAll('img').forEach(img => {
+        try {
+          const src = img.getAttribute('src') || '';
+          if (/https?:\/\/github\.com\//i.test(src) && /\/blob\//i.test(src)) {
+            const raw = src.replace(/^https?:\/\/github\.com\//i, 'https://raw.githubusercontent.com/').replace(/\/blob\//i, '/');
+            img.setAttribute('src', raw);
+          }
+        } catch (_) {}
+      });
+
+      // Typeset math with MathJax if available
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise([container]).catch(() => {});
+      }
 
       // Smooth scroll for on-page anchors
       document.querySelectorAll('a[href^="#"]').forEach(a => {
