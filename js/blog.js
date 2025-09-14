@@ -1,75 +1,44 @@
-(function(){
-  const container = document.getElementById('post');
-
+(function() {
   function getParam(name) {
-    const u = new URL(location.href);
-    return u.searchParams.get(name);
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
   }
 
-  function el(tag, cls, html){
-    const e = document.createElement(tag);
-    if (cls) e.className = cls;
-    if (html !== undefined) e.innerHTML = html;
-    return e;
+  const slug = getParam('post');
+  const container = document.getElementById('postContent');
+  if (!container) return;
+
+  if (!slug) {
+    container.innerHTML = '<p class="muted">No post specified. <a href="blogs.html">Go back</a>.</p>';
+    return;
   }
 
-  function inferRepo() {
-    if (window.BLOG_REPO) return window.BLOG_REPO;
-    const host = location.hostname; // e.g. aryashah2k.github.io
-    const path = location.pathname.replace(/^\//, ''); // e.g. arya-terminal/blog.html
-    let owner = host.split('.')[0];
-    let repo = path.split('/')[0] || owner; // fallback
-    if (!/github\.io$/.test(host)) {
-      const metaOwner = document.querySelector('meta[name="gh-owner"]');
-      const metaRepo = document.querySelector('meta[name="gh-repo"]');
-      if (metaOwner && metaRepo) {
-        owner = metaOwner.getAttribute('content');
-        repo = metaRepo.getAttribute('content');
-      }
-    }
-    return { owner, repo, branch: 'main' };
-  }
+  const mdUrl = `blogs/${encodeURIComponent(slug)}.md`;
 
-  function renderError(msg) {
-    container.innerHTML = '';
-    container.appendChild(el('p','error', msg));
-  }
+  fetch(mdUrl, { cache: 'no-store' })
+    .then(r => r.ok ? r.text() : Promise.reject())
+    .then(md => {
+      // Configure marked
+      marked.setOptions({
+        breaks: true,
+        gfm: true
+      });
+      const html = marked.parse(md);
+      container.innerHTML = DOMPurify.sanitize(html);
 
-  async function getDefaultBranch(owner, repo) {
-    try {
-      const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
-      if (!r.ok) throw new Error('Repo meta fetch failed');
-      const j = await r.json();
-      return j.default_branch || 'main';
-    } catch(_) {
-      return 'main';
-    }
-  }
-
-  async function fetchAndRender() {
-    if (!container) return;
-    const p = getParam('p');
-    const b = getParam('b');
-    if (!p) return renderError('No post specified.');
-
-    const repoInfo = inferRepo();
-    const branch = b || await getDefaultBranch(repoInfo.owner, repoInfo.repo);
-
-    const raw = `https://raw.githubusercontent.com/${repoInfo.owner}/${repoInfo.repo}/${branch}/${p}`;
-    const res = await fetch(raw);
-    if (!res.ok) return renderError('Unable to load this post.');
-    const md = await res.text();
-
-    // Render markdown safely
-    const html = DOMPurify.sanitize(marked.parse(md), {USE_PROFILES: {html: true}});
-    container.innerHTML = html;
-
-    // Smooth scroll anchor support
-    if (location.hash) {
-      const target = document.getElementById(location.hash.slice(1));
-      if (target) target.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  fetchAndRender();
+      // Smooth scroll for on-page anchors
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+          const id = this.getAttribute('href').slice(1);
+          const el = document.getElementById(id);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })
+    .catch(() => {
+      container.innerHTML = '<p class="muted">Post not found. <a href="blogs.html">Go back</a>.</p>';
+    });
 })();
