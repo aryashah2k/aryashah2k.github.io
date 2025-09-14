@@ -49,7 +49,10 @@ body.terminal-active #start { display: none; }
   line-height: 1.2;
   text-align: center;
 }
-.header-actions { justify-self: end; margin-right: 16px; }
+.header-actions { justify-self: end; margin-right: 8px; }
+.blogs-link { margin-right: 10px; color: #22eae0; border: 1px solid rgba(34,234,224,0.35); padding: 6px 10px; border-radius: 6px; }
+.blogs-link:hover { background: rgba(34,234,224,0.08); }
+.blogs-link.active { background: rgba(34,234,224,0.12); }
 .launch-btn {
   display: inline-flex;
   align-items: center;
@@ -76,6 +79,27 @@ body.terminal-active #start { display: none; }
   padding: 0 8px;
   overflow-wrap: anywhere;
 }
+.blogs-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.blog-card { background: #1b1429; border: 1px solid rgba(34,234,224,0.2); border-radius: 8px; overflow: hidden; transition: transform .2s ease, border-color .2s ease; }
+.blog-card:hover { transform: translateY(-2px); border-color: #22eae0; }
+.blog-link { display: block; padding: 10px; color: inherit; }
+.blog-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 6px; background: rgba(34,234,224,0.05); }
+.blog-card h3 { margin: 10px 0 6px; font-size: 18px; color: #e60efe; }
+.blog-excerpt { margin: 0; color: #b6a9d8; font-size: 14px; line-height: 1.4; }
+
+.blog-reading .blog-post { max-width: 840px; margin: 24px auto; padding: 0 8px; }
+.blog-post h1, .blog-post h2, .blog-post h3, .blog-post h4 { color: #e60efe; margin: 1em 0 .5em; }
+.blog-post p { color: #dcd4ee; line-height: 1.7; margin: .6em 0; white-space: normal; animation: none; }
+.blog-post a { color: #22eae0; }
+.blog-post pre, .blog-post code { background: #1a1326; color: #e6e6e6; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; }
+.blog-post pre { padding: 10px; overflow-x: auto; }
+.blog-post img { max-width: 100%; height: auto; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08); }
+.blog-post blockquote { border-left: 3px solid #9d0ffd; padding-left: 10px; color: #c8b7ec; }
 .hero { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: center; }
 .profile { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(34, 234, 224, 0.35); background: rgba(34,234,224,0.05); }
 .intro h1 {
@@ -146,12 +170,14 @@ b {
 @media (max-width: 900px) {
   .landing { padding: 0 12px; }
   .site-header .brand { font-size: 32px; }
+  .blogs-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 700px) {
   .hero { grid-template-columns: 1fr; text-align: left; }
   .profile { margin: 0 auto; }
   .intro h1 { font-size: 24px; }
   .site-header .brand { font-size: 28px; }
+  .blogs-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 420px) {
   .site-header { padding: 10px 6px; grid-template-columns: auto 1fr auto; }

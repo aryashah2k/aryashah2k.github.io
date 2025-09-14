@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Arya Shah — Blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/normalize.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="spacer" aria-hidden="true"></div>
+    <div class="brand"><a href="index.html" style="color:inherit;text-decoration:none">Arya Shah</a></div>
+    <div class="header-actions">
+      <a class="blogs-link active" href="blogs.html" title="My Blogs">My Blogs</a>
+    </div>
+  </header>
+
+  <main class="landing" role="main">
+    <section class="intro">
+      <h1>My Blogs</h1>
+      <p>Long-form notes, experiments, and write-ups. New posts appear automatically when added to the <code>blogs/</code> folder in the repository.</p>
+    </section>
+
+    <section class="blogs-grid" id="blogsGrid" aria-live="polite">
+      <!-- Cards injected by blogs.js -->
+    </section>
+  </main>
+
+  <script>
+    // Optional override: set your repo explicitly if on custom domain
+    window.BLOG_REPO = { owner: 'aryashah2k', repo: 'aryashah2k.github.io', branch: 'main' };
+  </script>
+  <script src="js/blogs.js"></script>
+</body>
+</html>
