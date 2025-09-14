@@ -10,6 +10,38 @@ body {
   min-width: 320px;
 }
 
+/* Light theme overrides */
+body.theme-light {
+  background: #f7f7fa;
+  color: #1c1c28;
+}
+body.theme-light .site-header {
+  background: rgba(255,255,255,0.85);
+  border-bottom-color: rgba(0,0,0,0.08);
+}
+body.theme-light .brand { color: #1c1c28; }
+body.theme-light .nav-link,
+body.theme-light .launch-btn,
+body.theme-light .exit-btn,
+body.theme-light .social-icon {
+  color: #1c1c28;
+  border-color: rgba(0,0,0,0.25);
+}
+body.theme-light .nav-link:hover,
+body.theme-light .launch-btn:hover,
+body.theme-light .social-icon:hover { background: rgba(0,0,0,0.06); }
+body.theme-light .muted { color: #5a5a74; }
+
+/* Blog grid/cards */
+body.theme-light .blog-card { background: #ffffff; border-color: rgba(0,0,0,0.1); }
+body.theme-light .blog-card p { color: #44485f; }
+
+/* Blog post content */
+body.theme-light .post a { color: #005fcc; }
+body.theme-light .post pre { background: #f0f2f5; }
+body.theme-light .post code { background: #f0f2f5; color: #1c1c28; }
+body.theme-light ::selection { background: #1c1c28; color: #ffffff; }
+
 /* Blog pages */
 .blog-container { max-width: 1000px; margin: 32px auto; padding: 0 12px; }
 .blog-container h1 { margin: 0 0 16px; }
@@ -217,6 +249,16 @@ b {
 .animation img, .animation a {
   margin-top: 50vh;
   transform: translateY(-50%);
+}
+
+/* Light theme: make overlay consistent */
+body.theme-light .animation {
+  background: #f7f7fa;
+}
+body.theme-light .animation img,
+body.theme-light .animation a {
+  /* ensure visibility on light bg */
+  filter: none;
 }
 
 /* Responsive adjustments */

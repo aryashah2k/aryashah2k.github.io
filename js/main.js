@@ -114,6 +114,7 @@ function setBodyColor(n) {
   // apply new color if n > 0
   if (n > 0 && n <= 8) {
     document.body.classList.add("color" + n);
+    try { localStorage.setItem('themeColorClass', 'color' + n); } catch(_) {}
   }
 }
 
