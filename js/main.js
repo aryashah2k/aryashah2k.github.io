@@ -39,7 +39,7 @@ function startTerminal() {
     playSound(start, 0.5);
   }, 500);
 
-  //After load animation run()
+  // After load animation, quickly start the terminal (reduced delay)
   setTimeout(function() {
     boucleWrite(run, "", 120);
     overlay.style.display = "none";

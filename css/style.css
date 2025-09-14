@@ -282,7 +282,7 @@ b {
   line-height: 1.3em;
   margin-top: -2px;
   animation: show 0.1s ease forwards;
-  animation-delay: 9.3s;
+  animation-delay: 3s; /* removed long delay to avoid pause */
   opacity: 0;
 }
 #getter::before {
