@@ -28,14 +28,31 @@
       const html = marked.parse(md);
       container.innerHTML = DOMPurify.sanitize(html);
 
-      // Fix GitHub blob image URLs to raw URLs so they load correctly
+      // Fix GitHub URLs to point to raw assets so they load correctly
       container.querySelectorAll('img').forEach(img => {
         try {
-          const src = img.getAttribute('src') || '';
-          if (/https?:\/\/github\.com\//i.test(src) && /\/blob\//i.test(src)) {
-            const raw = src.replace(/^https?:\/\/github\.com\//i, 'https://raw.githubusercontent.com/').replace(/\/blob\//i, '/');
-            img.setAttribute('src', raw);
+          let src = img.getAttribute('src') || '';
+          // Convert github.com/.../blob/... -> raw.githubusercontent.com/.../...  
+          if (/^https?:\/\/github\.com\//i.test(src)) {
+            // handle blob or raw path variants
+            src = src
+              .replace(/^https?:\/\/github\.com\//i, 'https://raw.githubusercontent.com/')
+              .replace(/\/blob\//i, '/')
+              .replace(/\/raw\//i, '/');
+            img.setAttribute('src', src);
           }
+
+          // Progressive enhancement: lazy load and avoid sending referrer
+          img.setAttribute('loading', 'lazy');
+          try { img.referrerPolicy = 'no-referrer'; } catch (_) {}
+
+          // Fallback thumbnail if external image fails
+          img.addEventListener('error', () => {
+            if (!img.dataset.fallback) {
+              img.dataset.fallback = '1';
+              img.src = 'img/portfolio.png';
+            }
+          }, { once: true });
         } catch (_) {}
       });
 
