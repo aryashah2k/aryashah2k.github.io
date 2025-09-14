@@ -6,7 +6,8 @@
 
   function getCurrentColorClass(){
     const body = document.body;
-    const match = Array.from(body.classList).find(c => /^color[0-8]$/.test(c));
+    // consider only color1..color8 as meaningful palette classes
+    const match = Array.from(body.classList).find(c => /^color[1-8]$/.test(c));
     return match || '';
   }
 
@@ -16,16 +17,17 @@
       body.classList.add('theme-light');
     } else {
       body.classList.remove('theme-light');
-      // Re-apply stored color class if present
+      // remove any existing color0..8 classes first
+      body.classList.forEach(c => { if(/^color[0-8]$/.test(c)) body.classList.remove(c); });
+      // Re-apply stored color class if present and not color0
       const saved = localStorage.getItem(STORAGE_COLOR);
-      if(saved){
-        // remove any existing colorX first
-        body.classList.forEach(c => { if(/^color[0-8]$/.test(c)) body.classList.remove(c); });
+      if(saved && saved !== 'color0'){
         body.classList.add(saved);
       }
     }
     localStorage.setItem(STORAGE_MODE, mode);
     updateToggleLabel();
+    callSyncHeader();
   }
 
   function svgSun(){
@@ -53,6 +55,7 @@
       btn.setAttribute('aria-label', 'Switch to light theme');
     }
     btn.setAttribute('aria-pressed', mode === 'light');
+    callSyncHeader();
   }
 
   function init(){
@@ -78,6 +81,22 @@
         applyMode(next);
       });
     }
+    callSyncHeader();
+  }
+
+  function callSyncHeader(){
+    try {
+      if (typeof window.syncHeader === 'function') {
+        window.syncHeader();
+        return;
+      }
+      // Fallback: adjust spacer width locally if syncHeader is not defined
+      var headerActions = document.querySelector('.header-actions');
+      var headerSpacer = document.querySelector('.site-header .spacer');
+      if (headerActions && headerSpacer) {
+        headerSpacer.style.width = headerActions.offsetWidth + 'px';
+      }
+    } catch(_) {}
   }
 
   if(document.readyState === 'loading'){

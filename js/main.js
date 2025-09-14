@@ -111,10 +111,16 @@ var COLOR_CLASSES = [
 function setBodyColor(n) {
   // remove any previous color class
   document.body.classList.remove.apply(document.body.classList, COLOR_CLASSES);
+  // ensure site is in 'color' mode globally
+  try { localStorage.setItem('themeMode', 'color'); } catch(_) {}
+  document.body.classList.remove('theme-light');
   // apply new color if n > 0
   if (n > 0 && n <= 8) {
     document.body.classList.add("color" + n);
     try { localStorage.setItem('themeColorClass', 'color' + n); } catch(_) {}
+  } else {
+    // color 0: default palette (no colorX class)
+    try { localStorage.setItem('themeColorClass', 'color0'); } catch(_) {}
   }
 }
 
