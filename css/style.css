@@ -148,8 +148,12 @@ body.terminal-active #start { display: none; }
   font-size: 36px; /* enlarged name */
   line-height: 1.2;
   text-align: center;
+  /* prevent overlap: brand width is the full viewport minus left+right actions width and padding */
+  max-width: calc(100vw - (var(--actions-w, 160px) * 2) - 24px);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.header-actions { justify-self: end; margin-right: 8px; }
+.header-actions { justify-self: end; margin-right: 8px; display: inline-flex; flex-wrap: nowrap; }
 .nav-link {
   display: inline-block;
   margin-right: 10px;
@@ -157,7 +161,22 @@ body.terminal-active #start { display: none; }
   border: 1px solid rgba(34,234,224,0.35);
   padding: 6px 10px;
   border-radius: 6px;
+  white-space: nowrap; /* keep links on one line on mobile */
 }
+
+/* Ensure theme toggle button matches other nav buttons */
+#themeToggle.nav-link {
+  display: inline-flex;
+  align-items: center;
+  height: auto;
+  padding: 6px 10px;
+  background: transparent; /* match theme background */
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 1px solid rgba(34,234,224,0.35); /* ensure consistent border in dark */
+}
+#themeToggle.nav-link svg { width: 18px; height: 18px; }
 .nav-link:hover { background: rgba(34,234,224,0.08); }
 .launch-btn {
   display: inline-flex;
@@ -180,13 +199,65 @@ body.terminal-active #start { display: none; }
 }
 
 .landing {
-  max-width: 900px;
+  max-width: 1200px;
   margin: 40px auto 24px;
   padding: 0 8px;
   overflow-wrap: anywhere;
 }
+.landing-grid {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr); /* widen left column */
+  gap: 72px; /* extra-wide gutter to ensure separation */
+  align-items: start;
+}
+.landing-left {
+  position: sticky;
+  top: var(--header-h, 72px); /* dynamic sticky offset equals header height */
+  align-self: start;
+  height: fit-content;
+  z-index: 2; /* keep above right column content */
+  background: #211830; /* solid bg to avoid visual overlap */
+  border-right: 1px solid rgba(230, 14, 254, 0.15);
+  padding: 8px 16px 8px 0; /* extra right padding inside left */
+  box-shadow: 6px 0 10px rgba(0,0,0,0.12);
+}
+.intro { max-width: 340px; }
+.landing-right {
+  min-width: 0; /* allow text wrapping within grid */
+  padding-right: 12px;
+  padding-left: 20px; /* more internal left padding near divider */
+  position: relative;
+  z-index: 1;
+  border-left: 1px solid rgba(230, 14, 254, 0.15);
+}
+
+/* Resume typography enhancements */
+.resume h2 {
+  margin: 28px 0 12px;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #e60efe; /* magenta accent in dark */
+  border-bottom: 1px dashed rgba(230, 14, 254, 0.35);
+  padding-bottom: 4px;
+}
+.resume ul { margin: 8px 0 16px; padding-left: 20px; }
+.resume li { margin: 6px 0; }
+
+/* Light theme resume heading color */
+body.theme-light .resume h2 {
+  color: #5b21b6; /* indigo-700 */
+  border-bottom-color: rgba(0,0,0,0.15);
+}
+body.theme-light .landing-left {
+  background: transparent; /* no background in light theme */
+  border-right: none; /* remove border effect on light theme */
+  box-shadow: none; /* cleaner on light */
+}
+body.theme-light .landing-right { border-left-color: rgba(0,0,0,0.1); }
 .hero { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: center; }
 .profile { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(34, 234, 224, 0.35); background: rgba(34,234,224,0.05); }
+.landing-left .hero { grid-template-columns: 1fr; }
+.landing-left .profile { margin: 8px auto 16px; }
 .intro h1 {
   margin: 0 0 8px;
   font-size: 28px;
@@ -264,19 +335,79 @@ body.theme-light .animation a {
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .landing { padding: 0 12px; }
+  .landing-grid { grid-template-columns: 1fr; gap: 16px; }
+  /* Left column becomes full width and centered */
+  .landing-left {
+    position: static; top: auto;
+    background: transparent;
+    border-right: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  .intro { max-width: 520px; margin: 0 auto; }
+  /* Right column fills width and loses divider */
+  .landing-right {
+    padding-left: 0;
+    padding-right: 0;
+    border-left: none;
+  }
   .site-header .brand { font-size: 32px; }
 }
 @media (max-width: 700px) {
+  .site-header { grid-template-columns: auto 1fr auto; padding: 10px 8px; }
+  /* keep spacer so JS can center brand based on actions width */
+  .site-header .spacer { display: block; }
+  .site-header .brand {
+    justify-self: center;
+    font-size: 22px;
+    white-space: nowrap;
+    max-width: 60vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .header-actions { margin-right: 6px; gap: 6px; display: flex; flex-wrap: wrap; max-width: 45vw; justify-content: flex-end; }
+  .nav-link { padding: 4px 8px; font-size: 12px; }
+  .launch-btn { padding: 4px 8px; }
   .hero { grid-template-columns: 1fr; text-align: left; }
   .profile { margin: 0 auto; }
-  .intro h1 { font-size: 24px; }
-  .site-header .brand { font-size: 28px; }
+  .intro h1 { font-size: 22px; }
+  /* Ensure text wraps within viewport */
+  .landing-right,
+  .resume,
+  .resume ul,
+  .resume li,
+  .intro p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    hyphens: auto;
+  }
 }
 @media (max-width: 420px) {
-  .site-header { padding: 10px 6px; grid-template-columns: auto 1fr auto; }
-  .site-header .brand { font-size: 24px; }
+  /* Stack header into 2 rows: brand on first row, actions on second */
+  .site-header {
+    padding: 8px 6px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    row-gap: 6px;
+  }
+  .site-header .spacer { display: none !important; width: 0 !important; }
+  .site-header .brand {
+    justify-self: center;
+    font-size: 18px; white-space: nowrap;
+    max-width: 85vw; overflow: hidden; text-overflow: ellipsis;
+  }
+  .header-actions {
+    justify-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-right: 0;
+    max-width: 92vw;
+    align-items: center;
+  }
   .launch-btn span { display: none; } /* keep just the icon on very small screens */
-  .header-actions { margin-right: 4px; }
+  .nav-link { padding: 3px 6px; font-size: 11px; }
 }
 
 
@@ -324,7 +455,7 @@ body.theme-light .animation a {
   line-height: 1.3em;
   margin-top: -2px;
   animation: show 0.1s ease forwards;
-  animation-delay: 3s; /* removed long delay to avoid pause */
+  animation-delay: 0s; /* no delay to avoid pause */
   opacity: 0;
 }
 #getter::before {

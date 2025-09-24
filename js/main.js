@@ -20,13 +20,31 @@ var projectLink = document.getElementsByClassName("btn-direction");
 // Keep brand centered by matching left spacer width to right header actions
 var headerActions = document.querySelector('.header-actions');
 var headerSpacer = document.querySelector('.site-header .spacer');
+var siteHeader = document.querySelector('.site-header');
 function syncHeader() {
   if (headerActions && headerSpacer) {
     headerSpacer.style.width = headerActions.offsetWidth + 'px';
   }
+  if (siteHeader) {
+    try { document.documentElement.style.setProperty('--header-h', siteHeader.offsetHeight + 'px'); } catch(_) {}
+  }
 }
 window.addEventListener('load', syncHeader);
 window.addEventListener('resize', syncHeader);
+window.addEventListener('orientationchange', syncHeader);
+document.addEventListener('visibilitychange', function(){ if(!document.hidden) syncHeader(); });
+
+// Observe header size/content changes for dynamic centering
+try {
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function(){ syncHeader(); });
+    if (headerActions) ro.observe(headerActions);
+    if (siteHeader) ro.observe(siteHeader);
+  }
+} catch(_) {}
+
+// Make syncHeader available globally for other scripts (e.g., theme.js)
+try { window.syncHeader = syncHeader; } catch(_) {}
 
 // Unified terminal launcher
 function startTerminal() {

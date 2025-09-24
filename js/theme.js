@@ -65,13 +65,13 @@
       localStorage.setItem(STORAGE_COLOR, currentColor);
     }
 
-    const mode = localStorage.getItem(STORAGE_MODE) || 'color';
+    const mode = localStorage.getItem(STORAGE_MODE) || 'light';
     applyMode(mode);
 
     const btn = getToggleEl();
     if(btn){
       btn.addEventListener('click', function(){
-        const cur = localStorage.getItem(STORAGE_MODE) || 'color';
+        const cur = localStorage.getItem(STORAGE_MODE) || 'light';
         const next = (cur === 'light') ? 'color' : 'light';
         // Before leaving color mode, capture latest colorX from body
         if(cur === 'color'){
@@ -82,12 +82,31 @@
       });
     }
     callSyncHeader();
+
+    // Keep header centered on pages without main.js
+    try {
+      window.addEventListener('resize', callSyncHeader);
+      window.addEventListener('orientationchange', callSyncHeader);
+      document.addEventListener('visibilitychange', function(){ if(!document.hidden) callSyncHeader(); });
+      if (window.ResizeObserver) {
+        var headerActions = document.querySelector('.header-actions');
+        var siteHeader = document.querySelector('.site-header');
+        var ro = new ResizeObserver(function(){ callSyncHeader(); });
+        if (headerActions) ro.observe(headerActions);
+        if (siteHeader) ro.observe(siteHeader);
+      }
+    } catch(_) {}
   }
 
   function callSyncHeader(){
     try {
       if (typeof window.syncHeader === 'function') {
         window.syncHeader();
+        // also propagate actions width var
+        var headerActions = document.querySelector('.header-actions');
+        if (headerActions) {
+          document.documentElement.style.setProperty('--actions-w', headerActions.offsetWidth + 'px');
+        }
         return;
       }
       // Fallback: adjust spacer width locally if syncHeader is not defined
@@ -95,6 +114,7 @@
       var headerSpacer = document.querySelector('.site-header .spacer');
       if (headerActions && headerSpacer) {
         headerSpacer.style.width = headerActions.offsetWidth + 'px';
+        document.documentElement.style.setProperty('--actions-w', headerActions.offsetWidth + 'px');
       }
     } catch(_) {}
   }
