@@ -19,7 +19,7 @@ body.theme-light .site-header {
   background: rgba(255,255,255,0.85);
   border-bottom-color: rgba(0,0,0,0.08);
 }
-body.theme-light .brand { color: #1c1c28; }
+body.theme-light .brand { color: #000000; }
 body.theme-light .nav-link,
 body.theme-light .launch-btn,
 body.theme-light .exit-btn,
@@ -153,6 +153,8 @@ body.terminal-active #start { display: none; }
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.site-header .brand a { color: inherit; text-decoration: none; }
+.site-header .brand a:hover { background: transparent; text-decoration: none; }
 .header-actions { justify-self: end; margin-right: 8px; display: inline-flex; flex-wrap: nowrap; }
 .nav-link {
   display: inline-block;
