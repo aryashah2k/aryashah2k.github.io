@@ -90,7 +90,20 @@ body.theme-light .post code { background: #f0f2f5; color: #1c1c28; }
 body.theme-light ::selection { background: #1c1c28; color: #ffffff; }
 /* Blog pages */
 .blog-container { max-width: 1000px; margin: 32px auto; padding: 0 12px; }
-.blog-container h1 { margin: 0 0 16px; }
+.blog-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 16px; }
+.blog-container h1 { margin: 0; }
+#blogSearch {
+  flex: 0 0 340px;
+  max-width: 50vw;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(34,234,224,0.35);
+  background: #2a2140;
+  color: inherit;
+}
+#blogSearch::placeholder { color: #8da0b3; }
+body.theme-light #blogSearch { background: #ffffff; border-color: rgba(0,0,0,0.2); }
+@media (max-width: 560px) { #blogSearch { flex: 1 1 auto; max-width: 100%; } }
 .muted { color: #b6a9d8; }
 
 .blog-grid { display: grid; grid-template-columns: 1fr !important; grid-auto-rows: auto; gap: 12px; }
