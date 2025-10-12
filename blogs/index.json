@@ -1,8 +1,20 @@
 [
   {
-    "slug": "math",
-    "title": "The Philosophy of Choosing: Why Being Chosen = Not Being Chosen",
-    "description": "In mathematics, some equations go beyond numbers and reach into philosophy.",
-    "date": "2025-09-14T11:22:08+05:30"
+    "slug": "symmetry-of-choice",
+    "title": "The Symmetry of Choice: Why To Choose Is Also To Exclude",
+    "description": "Deep within mathematics, in a field that counts and arranges things, lies an equation so simple it feels like a secret. It speaks not just of numbers, but of the very essence of decision, identity, and existence. It has haunted my thoughts for years, revealing new layers of meaning in my life, my work, and even in the artificial minds we are building.",
+    "date": "2025-10-12T16:01:44+05:30"
+  },
+  {
+    "slug": "multi-sensor-pt-2",
+    "title": "Part 2. Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol",
+    "description": "# C. A Guided Tour of the App (Screenshots Coming Soon)",
+    "date": "2025-10-12T16:01:44+05:30"
+  },
+  {
+    "slug": "multi-sensor-pt-1",
+    "title": "Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol",
+    "description": "# A. The Problem, The Vision, and The Patent Idea",
+    "date": "2025-10-12T16:01:44+05:30"
   }
 ]
