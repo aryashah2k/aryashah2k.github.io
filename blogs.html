@@ -1,34 +1,246 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Arya Shah • Blogs</title>
+    <title>Blog | Arya Shah</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/normalize.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/style.css" />
+    <link rel="icon" type="image/x-icon" href="img/Computer.ico" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/al-folio.css" />
+    <style>
+      /* Blog-specific styles */
+      .blog-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      
+      .blog-header h1 {
+        margin: 0;
+      }
+      
+      #blogSearch {
+        flex: 0 0 300px;
+        max-width: 100%;
+        padding: 0.6rem 1rem;
+        border-radius: 6px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-color);
+        color: var(--text-color);
+        font-size: 0.95rem;
+      }
+      
+      #blogSearch::placeholder {
+        color: var(--text-muted);
+      }
+      
+      #blogSearch:focus {
+        outline: none;
+        border-color: var(--accent-color);
+      }
+      
+      .blog-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      
+      .blog-card {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        text-decoration: none;
+        color: inherit;
+        transition: border-color var(--transition), box-shadow var(--transition);
+      }
+      
+      .blog-card:hover {
+        border-color: var(--accent-color);
+        box-shadow: var(--shadow);
+        text-decoration: none;
+      }
+      
+      .blog-card svg {
+        flex-shrink: 0;
+        width: 24px;
+        height: 24px;
+        color: var(--accent-color);
+      }
+      
+      .blog-card h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--heading-color);
+      }
+      
+      .blog-card p {
+        display: none;
+      }
+      
+      /* Pagination */
+      .pagination {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+      
+      .page-btn {
+        background: var(--bg-color);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all var(--transition);
+      }
+      
+      .page-btn:hover:not(.disabled) {
+        border-color: var(--accent-color);
+        color: var(--accent-color);
+      }
+      
+      .page-btn.active {
+        background: var(--accent-color);
+        color: white;
+        border-color: var(--accent-color);
+      }
+      
+      .page-btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      
+      .page-status {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-left: 1rem;
+      }
+      
+      .muted {
+        color: var(--text-muted);
+      }
+      
+      /* Highlight for search */
+      mark.hl {
+        background: rgba(0, 118, 223, 0.2);
+        color: inherit;
+        padding: 0 2px;
+        border-radius: 2px;
+      }
+      
+      [data-theme="dark"] mark.hl {
+        background: rgba(96, 165, 250, 0.3);
+      }
+      
+      @media (max-width: 560px) {
+        .blog-header {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        
+        #blogSearch {
+          flex: 1 1 auto;
+        }
+      }
+    </style>
   </head>
   <body>
-    <header class="site-header" role="banner">
-      <div class="spacer" aria-hidden="true"></div>
-      <div class="brand"><a href="index.html" aria-label="Go to Home">Arya Shah</a></div>
-      <div class="header-actions">
-        <a class="nav-link" href="index.html">Home</a>
-        <button id="themeToggle" class="nav-link" aria-label="Toggle theme" title="Toggle theme">Color</button>
+    <!-- Navigation -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="index.html" class="navbar-brand">Arya Shah</a>
+        <ul class="navbar-nav">
+          <li class="nav-item"><a href="index.html">About</a></li>
+          <li class="nav-item"><a href="index.html#publications">Publications</a></li>
+          <li class="nav-item"><a href="index.html#projects">Projects</a></li>
+          <li class="nav-item"><a href="blogs.html" style="color: var(--accent-color);">Blog</a></li>
+          <li class="nav-item">
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+              <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+              </svg>
+              <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </button>
+          </li>
+        </ul>
       </div>
-    </header>
+    </nav>
 
-    <main class="blog-container" role="main">
+    <!-- Main Content -->
+    <main class="main-content">
       <div class="blog-header">
-        <h1>My Blogs</h1>
-        <input id="blogSearch" type="search" placeholder="Search blogs..." aria-label="Search blogs" />
+        <h1>Blog</h1>
+        <input id="blogSearch" type="search" placeholder="Search posts..." aria-label="Search blog posts" />
       </div>
+      
       <div id="blogGrid" class="blog-grid" aria-live="polite"></div>
       <nav id="blogPagination" class="pagination" aria-label="Blog pagination"></nav>
-      <p id="blogEmpty" class="muted" style="display:none;">No posts yet. Push Markdown files to the <code>blogs/</code> folder to publish.</p>
+      <p id="blogEmpty" class="muted" style="display:none; text-align: center; margin-top: 2rem;">
+        No posts yet. Check back soon!
+      </p>
     </main>
 
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div class="footer-links">
+          <a href="https://github.com/aryashah2k" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
+        <p>© 2025 Arya Shah</p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
     <script src="js/blogs.js"></script>
-    <script src="js/theme.js"></script>
+    
+    <!-- Theme Toggle Script -->
+    <script>
+      (function() {
+        const toggle = document.getElementById('themeToggle');
+        const sunIcon = toggle.querySelector('.sun-icon');
+        const moonIcon = toggle.querySelector('.moon-icon');
+        const html = document.documentElement;
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateIcons(savedTheme);
+        
+        toggle.addEventListener('click', function() {
+          const currentTheme = html.getAttribute('data-theme');
+          const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+          updateIcons(newTheme);
+        });
+        
+        function updateIcons(theme) {
+          if (theme === 'dark') {
+            sunIcon.style.display = 'block';
+            moonIcon.style.display = 'none';
+          } else {
+            sunIcon.style.display = 'none';
+            moonIcon.style.display = 'block';
+          }
+        }
+      })();
+    </script>
   </body>
 </html>

@@ -18,15 +18,20 @@ var project = document.getElementsByClassName("prez-2");
 var projectLink = document.getElementsByClassName("btn-direction");
 
 // Keep brand centered by matching left spacer width to right header actions
+// Note: These elements may not exist in the new al-folio layout
 var headerActions = document.querySelector('.header-actions');
 var headerSpacer = document.querySelector('.site-header .spacer');
 var siteHeader = document.querySelector('.site-header');
+var navbar = document.querySelector('.navbar');
 function syncHeader() {
   if (headerActions && headerSpacer) {
     headerSpacer.style.width = headerActions.offsetWidth + 'px';
   }
   if (siteHeader) {
     try { document.documentElement.style.setProperty('--header-h', siteHeader.offsetHeight + 'px'); } catch(_) {}
+  }
+  if (navbar) {
+    try { document.documentElement.style.setProperty('--header-h', navbar.offsetHeight + 'px'); } catch(_) {}
   }
 }
 window.addEventListener('load', syncHeader);
@@ -40,6 +45,7 @@ try {
     var ro = new ResizeObserver(function(){ syncHeader(); });
     if (headerActions) ro.observe(headerActions);
     if (siteHeader) ro.observe(siteHeader);
+    if (navbar) ro.observe(navbar);
   }
 } catch(_) {}
 
@@ -86,9 +92,15 @@ if (exitBtn) {
       before = document.getElementById("before");
     }, 1);
     getter.classList.remove("shutdown");
+    getter.classList.remove("password");
     cmd.innerHTML = "";
     textarea.value = "";
+    // Remove terminal-active and all color classes
     document.body.classList.remove("terminal-active");
+    document.body.classList.remove.apply(document.body.classList, COLOR_CLASSES);
+    document.body.classList.remove("shutdown");
+    // Close any open works window
+    if (frame[0]) frame[0].classList.remove("open");
     syncHeader();
   });
 }
