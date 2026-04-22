@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> head }}
+    <title>{{ post.title }} — {{ site.name }}</title>
+    <meta name="description" content="{{ post.summary }}" />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+    <!-- KaTeX (auto-rendered) for Markdown math support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  </head>
+  <body>
+    {{> nav }}
+
+    <main class="container container-sm">
+      <a class="post-back" href="/blogs/">← All posts</a>
+
+      <header class="post-header">
+        <h1>{{ post.title }}</h1>
+        <div class="post-meta">{{ post.dateFormatted }}</div>
+        <!-- inject:post-tags -->
+        <!-- /inject:post-tags -->
+      </header>
+
+      <article class="prose">
+        <!-- inject:post-body -->
+        <!-- /inject:post-body -->
+      </article>
+    </main>
+
+    {{> footer }}
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.querySelector('.prose'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  </body>
+</html>

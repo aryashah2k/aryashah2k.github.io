@@ -1,0 +1,317 @@
+/* ==========================================================================
+   Terminal page — full-viewport immersive experience.
+   The site nav sits on top; everything below it becomes the CLI.
+   All rules are scoped to `body.terminal-active` so nothing leaks into the
+   rest of the site when these stylesheets are shared via the design system.
+   ========================================================================== */
+
+/* ---- Body takeover ---- */
+body.terminal-active {
+  display: block;               /* override base.css flex-column */
+  background: #211830;
+  color: #22eae0;
+  font-family: var(--font-mono), "Courier New", Courier, monospace;
+  padding: 0 var(--sp-6) 0;
+  min-height: 100dvh;
+}
+body.terminal-active .site-footer { display: none; }
+
+/* The shared nav, themed to match the terminal palette. */
+body.terminal-active .site-nav {
+  background: rgba(33, 24, 48, 0.9);
+  border-bottom-color: rgba(230, 14, 254, 0.18);
+}
+body.terminal-active .site-nav .brand,
+body.terminal-active .site-nav nav a {
+  color: #22eae0;
+}
+body.terminal-active .site-nav nav a:hover {
+  background: rgba(230, 14, 254, 0.12);
+  color: #fff;
+}
+body.terminal-active .site-nav nav a[aria-current="page"] {
+  background: rgba(230, 14, 254, 0.18);
+  color: #fff;
+}
+body.terminal-active .theme-toggle {
+  color: #22eae0;
+  background: rgba(33, 24, 48, 0.6);
+  border-color: rgba(230, 14, 254, 0.25);
+}
+
+/* ---- Off-screen textarea that receives every keystroke ---- */
+body.terminal-active #setter {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  background: transparent;
+  border: 0;
+  resize: none;
+}
+
+/* ---- Output stream ---- */
+body.terminal-active #terminal {
+  display: block;
+  padding: var(--sp-6) 0 0;
+  min-height: calc(100dvh - var(--nav-h) - 80px);
+  font-size: 14px;
+  line-height: 1.45;
+}
+body.terminal-active #terminal p {
+  display: block;
+  margin: 0;
+  line-height: 1.4;
+  overflow: hidden;
+  white-space: pre-wrap;
+  letter-spacing: 0.03em;
+  animation: term-typing 0.5s steps(30, end);
+  color: #22eae0;
+}
+body.terminal-active .no-animation { animation: term-typing 0 steps(30, end); }
+body.terminal-active .margin { margin-left: 20px; }
+@keyframes term-typing { from { width: 0; } to { width: 100%; } }
+
+/* Semantic color classes used by text.js */
+body.terminal-active .indice  { color: #a78bfa; }
+body.terminal-active .colored { color: #e60efe; }
+body.terminal-active .command { color: #9d0ffd; }
+body.terminal-active .error   { color: #f50f65; }
+body.terminal-active .white   { color: #fff; }
+body.terminal-active .inherit { color: #22eae0; }
+
+body.terminal-active a {
+  color: #22eae0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+body.terminal-active a:hover {
+  background: #22eae0;
+  color: #211830;
+  text-decoration: none;
+}
+body.terminal-active b { font-weight: 700; }
+body.terminal-active ::selection { background: #22eae0; color: #211830; }
+
+/* ---- Input row (pinned bottom) ---- */
+body.terminal-active #cmd {
+  display: block;
+  position: sticky;
+  bottom: 0;
+  padding: var(--sp-3) 0 var(--sp-4);
+  background: linear-gradient(180deg, rgba(33,24,48,0) 0%, #211830 30%);
+  cursor: text;
+  min-height: 50px;
+  font-size: 14px;
+}
+body.terminal-active #getter {
+  line-height: 1.3em;
+  animation: term-show 0.15s ease forwards;
+  opacity: 0;
+}
+body.terminal-active #getter::before          { content: "admin> ";    color: #a78bfa; }
+body.terminal-active #getter.password::before { content: "Password: "; color: #a78bfa; }
+body.terminal-active #getter.shutdown::before { content: ""; }
+@keyframes term-show { from { opacity: 0; } to { opacity: 1; } }
+
+/* Blinking block cursor */
+body.terminal-active .cursor {
+  display: inline-block;
+  width: 3px;
+  max-width: 3px;
+  height: 1.15em;
+  background-color: #22eae0;
+  color: transparent;
+  overflow: hidden;
+  vertical-align: -3px;
+  animation: term-blink 1s steps(1) infinite;
+}
+@keyframes term-blink { 50% { opacity: 0; } }
+
+/* ---- "Color N" filter modes (triggered by the `color` command) ---- */
+body.terminal-active.color1 { filter: hue-rotate(45deg); }
+body.terminal-active.color2 { filter: hue-rotate(90deg); }
+body.terminal-active.color3 { filter: hue-rotate(135deg); }
+body.terminal-active.color4 { filter: hue-rotate(180deg); }
+body.terminal-active.color5 { filter: hue-rotate(225deg); }
+body.terminal-active.color6 { filter: hue-rotate(270deg); }
+body.terminal-active.color7 { filter: hue-rotate(315deg); }
+body.terminal-active.color8 { filter: invert(100%); background: #dee7cf; }
+body.terminal-active.shutdown { filter: grayscale(100%); background: #000; }
+
+/* ---- Boot animation overlay ---- */
+.animation {
+  position: fixed;
+  inset: 0;
+  background: #211830;
+  z-index: 110;
+  display: none;
+  text-align: center;
+}
+.animation img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 240px;
+}
+
+/* ==========================================================================
+   "Works" draggable window — opened by the `works` command.
+   Restores the legacy fullscreen floating window semantics (fixed, above all).
+   ========================================================================== */
+
+body.terminal-active .term-window {
+  position: fixed;
+  inset: var(--nav-h) 0 0 0;
+  width: 100vw;
+  height: calc(100dvh - var(--nav-h));
+  z-index: 40;
+  display: none;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+  background: rgba(0, 0, 0, 0.25);
+}
+body.terminal-active .term-window.open {
+  display: block;
+  opacity: 1;
+}
+
+body.terminal-active .term-window .resize-drag {
+  position: absolute;
+  top: 8vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(640px, 92vw);
+  height: min(620px, 80vh);
+  background: #c0c0c0;
+  color: #000;
+  border: 4px outset #ddd;
+  font-family: "Tahoma", "Segoe UI", sans-serif;
+  font-weight: 600;
+  overflow: hidden;
+  box-sizing: border-box;
+  touch-action: none;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+}
+
+body.terminal-active .term-window .top {
+  background: linear-gradient(180deg, #1e3aaa, #0a1f66);
+  color: #fff;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 2px solid #000;
+}
+body.terminal-active .term-window .top p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  flex: 1;
+}
+body.terminal-active .term-window #close {
+  cursor: pointer;
+  width: 22px; height: 20px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #c0c0c0;
+  color: #000;
+  border: 2px outset #eee;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+}
+body.terminal-active .term-window #close:active { border-style: inset; }
+
+body.terminal-active .term-window .undrag {
+  padding: var(--sp-3) var(--sp-4) var(--sp-5);
+  height: calc(100% - 34px);
+  overflow-y: auto;
+}
+body.terminal-active .term-window .linkTop {
+  font-size: 12px;
+  color: #222;
+  margin-right: var(--sp-3);
+  text-decoration: none;
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+body.terminal-active .term-window .linkTop:hover { background: #a8a8a8; color: #000; }
+
+body.terminal-active .term-window .prez {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+}
+body.terminal-active .term-window .prez .icon {
+  flex: 0 0 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-4) var(--sp-2);
+  border: 1px dashed transparent;
+  color: #111;
+  text-decoration: none;
+  font-size: 13px;
+  text-align: center;
+  background: #d4d0c8;
+}
+body.terminal-active .term-window .prez .icon p { margin: 0; }
+body.terminal-active .term-window .prez .icon:hover {
+  border-color: #1e3aaa;
+  background: #b8d0f0;
+  color: #000;
+}
+
+body.terminal-active .term-window .prez-2 { display: none; }
+body.terminal-active .term-window .prez-2.prez-show,
+body.terminal-active .term-window .prez-2.active { display: block; }
+body.terminal-active .term-window .prez-2 h3 {
+  color: #111;
+  font-family: "Tahoma", "Segoe UI", sans-serif;
+  margin-top: var(--sp-3);
+}
+body.terminal-active .term-window .prez-2 p {
+  color: #222;
+  font-size: 13px;
+  font-weight: 500;
+}
+body.terminal-active .term-window .prez-2 a { color: #0a1f66; text-decoration: underline; }
+body.terminal-active .term-window .prez-2 a:hover { background: none; color: #1e3aaa; }
+
+body.terminal-active .term-window .btn-back {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #d4d0c8;
+  border: 2px outset #eee;
+  color: #000;
+  text-decoration: none;
+  font-size: 12px;
+}
+body.terminal-active .term-window .btn-back:active { border-style: inset; }
+
+body.terminal-active .term-window .bottom {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  border-top: 2px inset #999;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: #222;
+  background: #c0c0c0;
+  display: flex;
+  gap: var(--sp-4);
+}
+body.terminal-active .term-window .bottom p { margin: 0; }
+
+/* ---- Responsive tweaks ---- */
+@media (max-width: 640px) {
+  body.terminal-active { padding: 0 var(--sp-3); }
+  body.terminal-active #terminal { font-size: 12px; }
+  body.terminal-active #cmd { font-size: 12px; }
+}
+
+/* Hidden utility button used to satisfy legacy selectors. */
+#start[hidden] { display: none !important; }

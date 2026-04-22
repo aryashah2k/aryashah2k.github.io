@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> head }}
+    <title>Terminal — {{ site.name }}</title>
+    <meta name="description" content="Interactive terminal portfolio for {{ site.name }}." />
+    <link rel="stylesheet" href="/terminal/terminal.css" />
+  </head>
+  <body>
+    {{> nav }}
+
+    <!-- Boot animation overlay (filled by main.js) -->
+    <div class="animation"></div>
+
+    <!-- "Works" draggable window (hidden until the `works` command is issued) -->
+    <div class="term-window">
+      <div class="resize-drag">
+        <div class="top">
+          <p id="toped">{{ site.name }} — Works</p>
+          <span id="close" aria-label="Close" title="Close">×</span>
+        </div>
+        <div class="undrag">
+          <a class="linkTop" href="#">File</a>
+          <a class="linkTop" href="#">Edit</a>
+          <a class="linkTop" href="#">View</a>
+          <a class="linkTop" href="#">Help</a>
+
+          <div class="prez">
+            <a href="#" class="icon btn-direction" data-direction-project="p1" data-top="Projects">
+              <p>📁 Projects</p>
+            </a>
+            <a href="#" class="icon btn-direction" data-direction-project="p2" data-top="Blog">
+              <p>📝 Blog</p>
+            </a>
+            <a href="#" class="icon btn-direction" data-direction-project="p3" data-top="Music IDE">
+              <p>🎹 Music IDE</p>
+            </a>
+            <a href="#" class="icon btn-direction" data-direction-project="p4" data-top="Experience">
+              <p>💼 Experience</p>
+            </a>
+          </div>
+
+          <div class="prez prez-2" id="p1">
+            <a href="#" class="btn btn-back">Back</a>
+            <h3>Projects</h3>
+            <p>See the <a href="/#projects">Projects</a> section of the landing page for the full list.</p>
+          </div>
+          <div class="prez prez-2" id="p2">
+            <a href="#" class="btn btn-back">Back</a>
+            <h3>Blog</h3>
+            <p>Long-form writing lives on the <a href="/blogs/">blog page</a>.</p>
+          </div>
+          <div class="prez prez-2" id="p3">
+            <a href="#" class="btn btn-back">Back</a>
+            <h3>Music IDE</h3>
+            <p>Open the <a href="/daw/">Music IDE</a> for FL Studio projects and audio work.</p>
+          </div>
+          <div class="prez prez-2" id="p4">
+            <a href="#" class="btn btn-back">Back</a>
+            <h3>Experience</h3>
+            <p>See the <a href="/#experience">Experience</a> section of the landing page.</p>
+          </div>
+
+          <div class="bottom">
+            <p class="b1">Select an option above</p>
+            <p class="b2"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal output stream -->
+    <div id="terminal"><a id="before"></a></div>
+
+    <!-- Terminal input row (pinned bottom) -->
+    <div id="cmd" onclick="document.getElementById('setter').focus();">
+      <textarea
+        id="setter"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        onkeydown="writeit(this, event);moveIt(this.value.length, event)"
+        onkeyup="writeit(this, event)"
+        onkeypress="writeit(this, event);"
+      ></textarea>
+      <div id="getter">
+        <span id="writer"></span><b class="cursor" id="cursor">█</b>
+      </div>
+    </div>
+
+    <!-- A no-op #start element so legacy main.js can attach cleanly -->
+    <button id="start" hidden aria-hidden="true"></button>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script src="/terminal/interacth.js"></script>
+    <script src="/terminal/text.js"></script>
+    <script src="/terminal/caret.js"></script>
+    <script src="/terminal/main.js"></script>
+  </body>
+</html>

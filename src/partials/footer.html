@@ -1,0 +1,8 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© {{ year }} {{ site.name }}. All rights reserved.</div>
+    <div>
+      {{#each site.footerLinks}}<a href="{{ this.href }}" target="_blank" rel="noopener">{{ this.label }}</a>{{#unless @last}} · {{/unless}}{{/each}}
+    </div>
+  </div>
+</footer>

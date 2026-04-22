@@ -1,0 +1,16 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "Arya Shah's personal portfolio — markdown-driven, built with a tiny Node script, deployed to GitHub Pages.",
+  "private": true,
+  "scripts": {
+    "clean": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true});\"",
+    "build": "node scripts/build.js",
+    "dev": "npm run build && npx --yes http-server dist -p 8080 -c-1"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "js-yaml": "^4.1.0",
+    "marked": "^12.0.2"
+  }
+}

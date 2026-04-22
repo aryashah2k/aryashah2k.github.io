@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> head }}
+    <title>{{ site.name }} — {{ site.tagline }}</title>
+    <meta name="description" content="{{ site.description }}" />
+    <link rel="stylesheet" href="/styles/pages/landing.css" />
+  </head>
+  <body>
+    {{> nav }}
+
+    <main>
+      <section class="container" id="hero">
+        <div class="hero">
+          <div>
+            <h1>{{ site.name }}</h1>
+            <p class="tagline">{{ site.tagline }}</p>
+            <div class="hero-ctas">
+              <a class="btn btn-primary" href="#about">Read more</a>
+              <a class="btn btn-ghost" href="/blogs/">Read the blog</a>
+              <a class="btn btn-ghost" href="/terminal/">Open terminal</a>
+              <a class="btn btn-ghost" href="/daw/">Open Music IDE</a>
+            </div>
+            <div class="socials">
+              {{#each site.socials}}
+              <a href="{{ this.href }}" target="_blank" rel="noopener" aria-label="{{ this.label }}" title="{{ this.label }}">
+                {{{ this.icon }}}
+              </a>
+              {{/each}}
+            </div>
+          </div>
+          {{#if site.avatar}}
+          <img class="hero-avatar" src="{{ site.avatar }}" alt="{{ site.name }}" />
+          {{/if}}
+        </div>
+      </section>
+
+      <section class="container section" id="about" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>About</h2></div>
+        <div class="about-body">
+          <!-- inject:about -->
+          <!-- /inject:about -->
+        </div>
+      </section>
+
+      <section class="container section" id="news" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>News</h2></div>
+        <!-- inject:news -->
+        <!-- /inject:news -->
+      </section>
+
+      <section class="container section" id="experience" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Experience</h2></div>
+        <!-- inject:experience -->
+        <!-- /inject:experience -->
+      </section>
+
+      <section class="container section" id="projects" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Projects</h2></div>
+        <!-- inject:projects -->
+        <!-- /inject:projects -->
+      </section>
+
+      <section class="container section" id="publications" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Selected Publications</h2></div>
+        <!-- inject:publications -->
+        <!-- /inject:publications -->
+      </section>
+
+      <section class="container section" id="blogs" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Latest Writing</h2></div>
+        <!-- inject:blogs-preview -->
+        <!-- /inject:blogs-preview -->
+        <p style="margin-top: var(--sp-4)"><a href="/blogs/">See all posts →</a></p>
+      </section>
+
+      <section class="container section" id="skills" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Skills</h2></div>
+        <!-- inject:skills -->
+        <!-- /inject:skills -->
+      </section>
+
+      <section class="container section" id="education" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Education</h2></div>
+        <!-- inject:education -->
+        <!-- /inject:education -->
+      </section>
+
+      <section class="container section" id="certifications" data-reveal>
+        <div class="section-title"><span class="accent-bar"></span><h2>Certifications</h2></div>
+        <!-- inject:certifications -->
+        <!-- /inject:certifications -->
+      </section>
+    </main>
+
+    {{> footer }}
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script src="/scripts/reveal.js"></script>
+  </body>
+</html>

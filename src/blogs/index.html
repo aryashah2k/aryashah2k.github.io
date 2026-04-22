@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {{> head }}
+    <title>Blog — {{ site.name }}</title>
+    <meta name="description" content="Writing by {{ site.name }}." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+  </head>
+  <body>
+    {{> nav }}
+
+    <main class="container">
+      <section class="section" style="border-top: 0; padding-top: var(--sp-12)">
+        <div class="section-title"><span class="accent-bar"></span><h2>Blog</h2></div>
+        <p class="text-muted" style="max-width: 60ch">
+          Notes, essays, and long-form pieces on research, engineering, and the ideas I'm chewing on.
+        </p>
+        <!-- inject:blogs-list -->
+        <!-- /inject:blogs-list -->
+      </section>
+    </main>
+
+    {{> footer }}
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+  </body>
+</html>
