@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol — Arya Shah</title>
+    <meta name="description" content="The problem, the vision, and the patent idea behind a GPS-resilient multi-sensor positioning system." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+    <!-- KaTeX (auto-rendered) for Markdown math support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  </head>
+  <body>
+    <header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#about">About</a><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#publications">Publications</a><a href="/blogs/">Blog</a><a href="/terminal/">Terminal</a><a href="/daw/">Music IDE</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main class="container container-sm">
+      <a class="post-back" href="/blogs/">← All posts</a>
+
+      <header class="post-header">
+        <h1>Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</h1>
+        <div class="post-meta">Oct 2025</div>
+        <div class="chips"><span class="chip chip-outline">patent</span><span class="chip chip-outline">sensor-fusion</span><span class="chip chip-outline">robotics</span></div>
+      </header>
+
+      <article class="prose">
+        <h1>Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</h1>
+<h1>A. The Problem, The Vision, and The Patent Idea</h1>
+<blockquote>
+<p>2-part blog series for my patent: &quot;Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</p>
+</blockquote>
+<h2>The Everyday Problem</h2>
+<ul>
+<li><p><strong>GPS isn’t always there.</strong> Tunnels, tall buildings, forests, bad weather, even deliberate jamming can make GPS drop out or wobble.</p>
+</li>
+<li><p><strong>Vehicles still need to know where they are.</strong> If we lose location even for 30–60 seconds, navigation and safety features can misbehave.</p>
+</li>
+</ul>
+<h2>The Vision</h2>
+<p>Keep knowing where the vehicle is, even when GPS goes dark by <strong>combining the strengths of many sensors</strong> instead of relying on just one.</p>
+<h2>The Patent Idea (High-Level)</h2>
+<ul>
+<li><p><strong>Fuse multiple sensors</strong> (GPS, IMU, compass, wheel speed) in a smart way so that the system:</p>
+</li>
+<li><p>Uses <strong>GPS</strong> when it’s good.</p>
+</li>
+<li><p>Seamlessly switches to <strong>dead‑reckoning</strong> (DR) when GPS is poor or gone.</p>
+</li>
+<li><p>Automatically <strong>recovers</strong> when GPS comes back without jumps or glitches.</p>
+</li>
+<li><p>The novelty lies in the <strong>how</strong>: an arrangement of signals, timing, and decision rules that gives smooth, trustworthy positioning in common failure scenarios.</p>
+</li>
+</ul>
+<h2>What “Dead‑Reckoning” Means</h2>
+<p>When sailors couldn’t see the stars, they guessed where they were by tracking <strong>how fast</strong> they moved and <strong>in which direction</strong> from their last known point. We do the same, but with modern sensors.</p>
+<h2>Everyday Analogy</h2>
+<p>Think of it like <strong>walking blindfolded</strong>:</p>
+<ul>
+<li><p>GPS = someone telling you “you’re at the doorway”.</p>
+</li>
+<li><p>IMU + wheel speed = your <strong>steps</strong> and <strong>compass</strong> telling you you walked 5 steps north‑east.</p>
+</li>
+<li><p>When the voice stops (GPS lost), you can still estimate where you are by adding up steps and direction.</p>
+</li>
+</ul>
+<h2>Why This Matters</h2>
+<ul>
+<li><p><strong>Resilience</strong>: Navigation doesn’t panic when GPS flickers.</p>
+</li>
+<li><p><strong>Comfort</strong>: No crazy jumps on the map; the dot moves naturally.</p>
+</li>
+<li><p><strong>Safety</strong>: Driver aids keep the right context.</p>
+</li>
+</ul>
+<h1>B. How It Works</h1>
+<blockquote>
+<p>A friendly walkthrough of the moving parts and how they talk to each other.</p>
+</blockquote>
+<h2>The Cast (Who’s Who)</h2>
+<ul>
+<li><p><strong>Vehicle (Blue Dot)</strong>: The truth — where the car actually is in the simulation.</p>
+</li>
+<li><p><strong>Sensors</strong>:</p>
+</li>
+<li><p><strong>GPS</strong> — precise when available.</p>
+</li>
+<li><p><strong>IMU</strong> — senses motion: acceleration and rotation.</p>
+</li>
+<li><p><strong>Compass</strong> — which way the car faces.</p>
+</li>
+<li><p><strong>Wheel Speed</strong> — how fast the car is rolling.</p>
+</li>
+<li><p><strong>Positioning Brain (Red Dot)</strong>: Fuses all sensors to estimate position.</p>
+</li>
+<li><p><strong>Map &amp; Charts</strong>: Show the truth vs estimate and the error over time.</p>
+</li>
+</ul>
+<h2>The Simple Playbook</h2>
+<ol>
+<li><p><strong>When GPS is good</strong> → Trust GPS for position.</p>
+</li>
+<li><p><strong>When GPS goes bad</strong> → Use dead‑reckoning:</p>
+</li>
+</ol>
+<ul>
+<li><p>Start from the last good GPS point.</p>
+</li>
+<li><p>Step forward using speed × heading × time.</p>
+</li>
+<li><p>Keep this up until GPS returns.</p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>When GPS returns</strong> → Blend back without jumps.</li>
+</ol>
+<h2>Why This Is Smooth (Not Jumpy)</h2>
+<ul>
+<li><p>We always remember the <strong>last known good</strong> GPS position.</p>
+</li>
+<li><p>We move gently using <strong>speed &amp; heading</strong>, not random guesses.</p>
+</li>
+<li><p>When GPS recovers, we don’t teleport — we <strong>continue</strong> smoothly.</p>
+</li>
+</ul>
+<h2>A Mental Model You’ll Remember</h2>
+<p>Imagine drawing a line on a paper map:</p>
+<ul>
+<li><p>You dot your current location when GPS is present.</p>
+</li>
+<li><p>When GPS stops, you keep drawing the line using your <strong>compass</strong> and <strong>pedometer</strong>.</p>
+</li>
+<li><p>When GPS speaks again, you check you’re still on track and keep drawing.</p>
+</li>
+</ul>
+<h2>What Runs Under the Hood (Light Version)</h2>
+<ul>
+<li><p><strong>AHRS</strong> (a tiny helper) keeps heading stable by mixing IMU + compass.</p>
+</li>
+<li><p><strong>CAN messages</strong> are like postcards sensors send to the brain: “Here’s my reading!”</p>
+</li>
+<li><p>The <strong>controller</strong> keeps time and makes sure the GUI stays in sync.</p>
+</li>
+</ul>
+<p>In Part 2, we’ll take a <strong>guided tour of the actual app</strong>: the windows, the buttons, and what to look for.</p>
+
+      </article>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2026 Arya Shah. All rights reserved.</div>
+    <div>
+      <a href="https://github.com/aryashah2k" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+    </div>
+  </div>
+</footer>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.querySelector('.prose'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  </body>
+</html>

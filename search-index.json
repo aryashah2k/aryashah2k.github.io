@@ -1,0 +1,74 @@
+[
+  {
+    "type": "blog",
+    "title": "Part 2: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol",
+    "url": "/blogs/multi-sensor-pt-2/",
+    "summary": "A guided tour of the app — markers, CAN bus monitor, error plots, and how to run it yourself."
+  },
+  {
+    "type": "blog",
+    "title": "Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol",
+    "url": "/blogs/multi-sensor-pt-1/",
+    "summary": "The problem, the vision, and the patent idea behind a GPS-resilient multi-sensor positioning system."
+  },
+  {
+    "type": "blog",
+    "title": "The Symmetry of Choice: Why To Choose Is Also To Exclude",
+    "url": "/blogs/symmetry-of-choice/",
+    "summary": "A combinatorial identity, a life decision, and a meditation on what AI doesn't show us."
+  },
+  {
+    "type": "project",
+    "title": "PersonaVerse",
+    "url": "https://github.com/aryashah2k/PersonaVerse",
+    "summary": "Persona-based survey response generation framework using LLMs. Built with Python, HuggingFace, and OpenAI APIs."
+  },
+  {
+    "type": "project",
+    "title": "3DNNVisualizer",
+    "url": "https://aryashah.me/3DNNVisualizer",
+    "summary": "3D Neural Network visualizer for YOLO v2-tiny, AlexNet, and LeNet. Built with TensorFlow.js and TensorSpace.js."
+  },
+  {
+    "type": "project",
+    "title": "MetaHeurustics",
+    "url": "https://crates.io/crates/metaheurustics-rs",
+    "summary": "Rust library for metaheuristic optimization algorithms. 1,400+ downloads on crates.io."
+  },
+  {
+    "type": "publication",
+    "title": "In Search of Goodness: Large Scale Benchmarking of Goodness Functions for the Forward-Forward Algorithm",
+    "url": "https://arxiv.org/abs/2511.18567",
+    "summary": "arXiv"
+  },
+  {
+    "type": "publication",
+    "title": "Purrturbed but Stable: Human-Cat Invariant Representations Across CNNs, ViTs and Self-Supervised ViTs",
+    "url": "https://arxiv.org/abs/2511.02404",
+    "summary": "arXiv"
+  },
+  {
+    "type": "publication",
+    "title": "Auto-delineation of the Hippocampus using Mask R-CNN for Radiation Oncology",
+    "url": "https://journals.lww.com/cancerjournal/fulltext/2024/20060/auto_delineation_of_the_hippocampus_using_mask.20.aspx",
+    "summary": "Journal of Cancer Research and Therapeutics (JCRT)"
+  },
+  {
+    "type": "publication",
+    "title": "Audio Classification of Emergency Vehicle Sirens Using RNN Architectures",
+    "url": "https://link.springer.com/chapter/10.1007/978-981-99-4626-6_6",
+    "summary": "Springer"
+  },
+  {
+    "type": "publication",
+    "title": "Prediction of PCOS Using Optimized Machine Learning Classifiers",
+    "url": "https://link.springer.com/chapter/10.1007/978-981-19-7041-2_1",
+    "summary": "Springer"
+  },
+  {
+    "type": "publication",
+    "title": "Monkeypox Skin Lesion Classification Using Transfer Learning Approach",
+    "url": "https://ieeexplore.ieee.org/document/10037374",
+    "summary": "IEEE Xplore"
+  }
+]

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>Blog — Arya Shah</title>
+    <meta name="description" content="Writing by Arya Shah." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+  </head>
+  <body>
+    <header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#about">About</a><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#publications">Publications</a><a href="/blogs/">Blog</a><a href="/terminal/">Terminal</a><a href="/daw/">Music IDE</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main class="container">
+      <section class="section" style="border-top: 0; padding-top: var(--sp-12)">
+        <div class="section-title"><span class="accent-bar"></span><h2>Blog</h2></div>
+        <p class="text-muted" style="max-width: 60ch">
+          Notes, essays, and long-form pieces on research, engineering, and the ideas I'm chewing on.
+        </p>
+        <div class="blog-list">
+      <a class="blog-card" href="/blogs/multi-sensor-pt-2/">
+        <div class="blog-date">Oct 2025</div>
+        <h3>Part 2: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</h3>
+        <p>A guided tour of the app — markers, CAN bus monitor, error plots, and how to run it yourself.</p>
+        <div class="chips" style="margin-top: var(--sp-3)"><span class="chip chip-outline">patent</span><span class="chip chip-outline">sensor-fusion</span><span class="chip chip-outline">demo</span></div>
+      </a>
+      <a class="blog-card" href="/blogs/multi-sensor-pt-1/">
+        <div class="blog-date">Oct 2025</div>
+        <h3>Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</h3>
+        <p>The problem, the vision, and the patent idea behind a GPS-resilient multi-sensor positioning system.</p>
+        <div class="chips" style="margin-top: var(--sp-3)"><span class="chip chip-outline">patent</span><span class="chip chip-outline">sensor-fusion</span><span class="chip chip-outline">robotics</span></div>
+      </a>
+      <a class="blog-card" href="/blogs/symmetry-of-choice/">
+        <div class="blog-date">Oct 2025</div>
+        <h3>The Symmetry of Choice: Why To Choose Is Also To Exclude</h3>
+        <p>A combinatorial identity, a life decision, and a meditation on what AI doesn&#39;t show us.</p>
+        <div class="chips" style="margin-top: var(--sp-3)"><span class="chip chip-outline">philosophy</span><span class="chip chip-outline">math</span><span class="chip chip-outline">ai</span></div>
+      </a></div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2026 Arya Shah. All rights reserved.</div>
+    <div>
+      <a href="https://github.com/aryashah2k" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+    </div>
+  </div>
+</footer>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+  </body>
+</html>

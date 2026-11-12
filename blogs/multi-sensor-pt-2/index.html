@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>Part 2: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol — Arya Shah</title>
+    <meta name="description" content="A guided tour of the app — markers, CAN bus monitor, error plots, and how to run it yourself." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+    <!-- KaTeX (auto-rendered) for Markdown math support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  </head>
+  <body>
+    <header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#about">About</a><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#publications">Publications</a><a href="/blogs/">Blog</a><a href="/terminal/">Terminal</a><a href="/daw/">Music IDE</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main class="container container-sm">
+      <a class="post-back" href="/blogs/">← All posts</a>
+
+      <header class="post-header">
+        <h1>Part 2: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</h1>
+        <div class="post-meta">Oct 2025</div>
+        <div class="chips"><span class="chip chip-outline">patent</span><span class="chip chip-outline">sensor-fusion</span><span class="chip chip-outline">demo</span></div>
+      </header>
+
+      <article class="prose">
+        <h1>Part 2. Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol</h1>
+<h1>C. A Guided Tour of the App (Screenshots Coming Soon)</h1>
+<blockquote>
+<p>Click-by-click walkthrough of what you’ll see and what it means.</p>
+</blockquote>
+<h2>The Main Screen</h2>
+<ul>
+<li><p><strong>Top Left — Controls</strong></p>
+</li>
+<li><p>Start / Pause / Reset the simulation.</p>
+</li>
+<li><p>Adjust simulation speed (0.1× to 10×).</p>
+</li>
+<li><p>Load a custom route (CSV).</p>
+</li>
+<li><p>Force GPS failure manually (for demos/tests).</p>
+</li>
+<li><p><strong>Center — Map</strong></p>
+</li>
+<li><p>🔵 Blue marker: ground truth (where the car really is in the sim).</p>
+</li>
+<li><p>🔴 Red marker: estimated position (what the system believes).</p>
+</li>
+<li><p>Red rectangle overlays: GPS‑denied zones.</p>
+</li>
+<li><p>Trails: past path of blue and red markers.</p>
+</li>
+<li><p><strong>Bottom — Performance Metrics</strong></p>
+</li>
+<li><p>A live plot of <strong>position error over time</strong>.</p>
+</li>
+<li><p>Flat line near zero = GPS available.</p>
+</li>
+<li><p>Rising line = Dead‑reckoning (GPS off) — expected behavior.</p>
+</li>
+<li><p><strong>Right — CAN Bus Monitor</strong></p>
+</li>
+<li><p>Live list of incoming sensor messages.</p>
+</li>
+<li><p>Columns: Timestamp, Bus, CAN ID, Message, Data.</p>
+</li>
+</ul>
+<h2>Demo</h2>
+<ol>
+<li><p>Click <strong>Start</strong>.</p>
+</li>
+<li><p>Watch the <strong>blue and red markers</strong> move together.</p>
+</li>
+<li><p>When entering the red rectangle, the red marker drifts slowly — that’s <strong>dead‑reckoning</strong>.</p>
+</li>
+<li><p>As you leave the rectangle, red snaps back close to blue — that’s <strong>GPS recovery</strong>.</p>
+</li>
+<li><p>Error plot drops again — back to normal.</p>
+</li>
+</ol>
+<h2>Key Interactions</h2>
+<ul>
+<li><p><strong>Reset</strong> puts the car back to the first waypoint and clears the plot.</p>
+</li>
+<li><p><strong>Load Route</strong> lets you demo different paths (straight lines, turns, loops).</p>
+</li>
+<li><p><strong>Force GPS Failure</strong> triggers dead‑reckoning anywhere on the map.</p>
+</li>
+</ul>
+<h2>Behind the Scenes (Only What’s Useful)</h2>
+<ul>
+<li><p>Messages from sensors are sent over a simulated CAN bus.</p>
+</li>
+<li><p>The Positioning ECU listens, fuses data, and emits a <strong>position update</strong> signal.</p>
+</li>
+<li><p>The GUI receives that signal and updates the red marker and plots.</p>
+</li>
+</ul>
+<h2>Troubleshooting (Friendly Tips)</h2>
+<ul>
+<li><p><strong>Markers don’t move</strong>: Click Start. Check the log for “Default route loaded successfully”.</p>
+</li>
+<li><p><strong>Red doesn’t appear</strong>: Wait a second — first GPS must arrive. Then you’ll see estimates.</p>
+</li>
+<li><p><strong>Error looks huge</strong>: This can happen only if GPS state is misread; the app now handles the “Valid” status correctly.</p>
+</li>
+<li><p><strong>CAN panel empty</strong>: Fixed — it now updates at ~10 Hz to stay readable.</p>
+</li>
+</ul>
+<h1>D. Results, Demos, and How to Try It Yourself</h1>
+<blockquote>
+<p>What you can expect to see, and a super-quick way to run the demo.</p>
+</blockquote>
+<h2>What You’ll See (At a Glance)</h2>
+<ul>
+<li><p><strong>Markers move together</strong> when GPS is available — red ≈ blue.</p>
+</li>
+<li><p><strong>Red drifts gradually</strong> inside a GPS‑denied zone — that’s expected dead‑reckoning.</p>
+</li>
+<li><p><strong>Error plot rises</strong> during GPS loss and <strong>drops back</strong> when GPS returns.</p>
+</li>
+<li><p><strong>CAN monitor fills</strong> with GPS/IMU/Compass/Wheel Speed messages (~10 Hz view).</p>
+</li>
+</ul>
+<h2>Demo Script</h2>
+<ol>
+<li><p>Click <strong>Start</strong>.</p>
+</li>
+<li><p>Point at the <strong>blue</strong> (truth) and <strong>red</strong> (estimate) markers.</p>
+</li>
+<li><p>Watch the car enter the <strong>red rectangle</strong> — error grows slowly.</p>
+</li>
+<li><p>As it exits, the red re‑aligns — error falls.</p>
+</li>
+<li><p>Open the <strong>CAN Bus Monitor</strong> and show live frames.</p>
+</li>
+</ol>
+<h2>How To Run Locally</h2>
+<pre><code class="language-bash">
+# 1) Create environment
+
+conda  create  -n  multi-sensor  python=3.9  -y
+
+conda  activate  multi-sensor
+
+# 2) Install deps
+
+pip  install  -r  requirements.txt
+
+# 3) Run the app
+
+python  src/main.py
+</code></pre>
+<h2>Where to Put Your Own Route</h2>
+<ul>
+<li><p>File: <code>data/route1.csv</code> (CSV with <code>latitude,longitude</code> header)</p>
+</li>
+<li><p>Load it from the GUI via <strong>Load Route File</strong>.</p>
+</li>
+</ul>
+<h2>Tips for a Smooth Demo</h2>
+<ul>
+<li><p><strong>Slow it down</strong>: set speed to 0.5× for explanations.</p>
+</li>
+<li><p><strong>Point out the zone</strong> before entry so viewers know what to expect.</p>
+</li>
+<li><p><strong>Use Reset</strong> between takes to keep plots clean.</p>
+</li>
+</ul>
+<h2>What’s Unique About This (Patent Angle)</h2>
+<ul>
+<li><p><strong>Sensor fusion that fails gracefully</strong>: no jumps, no panic when GPS is gone.</p>
+</li>
+<li><p><strong>Clear separation of concerns</strong>: sensors → CAN → fusion → GUI.</p>
+</li>
+<li><p><strong>Practical demoability</strong>: zones, plots, and monitor make behavior obvious.</p>
+</li>
+</ul>
+
+      </article>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2026 Arya Shah. All rights reserved.</div>
+    <div>
+      <a href="https://github.com/aryashah2k" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+    </div>
+  </div>
+</footer>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.querySelector('.prose'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  </body>
+</html>

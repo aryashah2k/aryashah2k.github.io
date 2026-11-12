@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>Music IDE — Arya Shah</title>
+    <meta name="description" content="FL Studio-inspired portfolio view of music projects by Arya Shah." />
+    <link rel="stylesheet" href="/daw/styles.css" />
+    <style>
+      /* Scope DAW body styles so the shared nav stays visible on top. */
+      body.daw-page { display: flex; flex-direction: column; min-height: 100dvh; }
+      body.daw-page .toolbar { position: relative; }
+      body.daw-page .main-container { flex: 1; }
+    </style>
+  </head>
+  <body class="daw-page">
+    <header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#about">About</a><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#publications">Publications</a><a href="/blogs/">Blog</a><a href="/terminal/">Terminal</a><a href="/daw/">Music IDE</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+      <div class="loading-logo">ARYA'S STUDIO</div>
+      <div class="loading-bar">
+        <div class="loading-progress"></div>
+      </div>
+    </div>
+
+    <header class="toolbar" role="banner">
+      <nav class="menu-bar" aria-label="DAW menu">
+        <div class="menu-item" tabindex="0">File</div>
+        <div class="menu-item" tabindex="0">Edit</div>
+        <div class="menu-item" tabindex="0">Add</div>
+        <div class="menu-item" tabindex="0">Patterns</div>
+        <div class="menu-item" tabindex="0">View</div>
+      </nav>
+
+      <div class="transport-controls" role="group" aria-label="Transport controls">
+        <button class="fl-button transport-btn stop" id="stopBtn" title="Stop (Enter)" aria-label="Stop">■</button>
+        <button class="fl-button transport-btn play" id="playBtn" title="Play (Space)" aria-label="Play">▶</button>
+      </div>
+
+      <div class="lcd-display" aria-live="polite">
+        <div class="lcd-time" id="lcdTime">001:01:00</div>
+        <div class="cpu-meter">
+          <span class="cpu-label">CPU</span>
+          <canvas class="cpu-graph" id="cpuGraph" width="70" height="18" aria-hidden="true"></canvas>
+        </div>
+      </div>
+
+      <div class="keyboard-hint" aria-hidden="true">
+        <span><kbd class="kbd">Space</kbd> Play</span>
+        <span><kbd class="kbd">Enter</kbd> Stop</span>
+      </div>
+
+      <div class="title-logo">Arya Shah | FL Projects</div>
+    </header>
+
+    <div class="main-container">
+      <aside class="browser" role="navigation" aria-label="Project browser">
+        <div class="browser-header">
+          <span class="browser-header-icon">📁</span>
+          Browser
+        </div>
+        <div class="browser-content">
+          <div class="folder open">
+            <div class="folder-header" tabindex="0" role="button" aria-expanded="true">
+              <span class="folder-icon">▶</span>
+              <span class="folder-name">
+                <span class="folder-emoji">🎹</span>
+                FL Projects
+              </span>
+            </div>
+            <div class="folder-children" role="group">
+              <div class="file-item" id="openProjectsPanel" tabindex="0"
+                   style="background: rgba(248, 140, 0, 0.1); border-left-color: var(--btn-active);">
+                <span class="file-icon">📂</span>
+                <span class="file-name">Browse All Projects...</span>
+                <span class="file-badge" style="background: var(--btn-active);">NEW</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="folder open">
+            <div class="folder-header" tabindex="0" role="button" aria-expanded="true">
+              <span class="folder-icon">▶</span>
+              <span class="folder-name">
+                <span class="folder-emoji">👤</span>
+                My Profile
+              </span>
+            </div>
+            <div class="folder-children" role="group">
+              <div class="file-item" id="bioFile" tabindex="0">
+                <span class="file-icon">📄</span>
+                <span class="file-name">Bio.txt</span>
+              </div>
+              <div class="file-item" id="resumeFile" tabindex="0">
+                <span class="file-icon">📑</span>
+                <span class="file-name">Resume.pdf</span>
+                <span class="file-badge">PDF</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="folder open">
+            <div class="folder-header" tabindex="0" role="button" aria-expanded="true">
+              <span class="folder-icon">▶</span>
+              <span class="folder-name">
+                <span class="folder-emoji">🔌</span>
+                Socials (VST)
+              </span>
+            </div>
+            <div class="folder-children" role="group">
+              
+              <div class="file-item" data-link="https://github.com/aryashah2k" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">GitHub.dll</span>
+              </div>
+              
+              <div class="file-item" data-link="https://www.linkedin.com/in/arya--shah/" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">LinkedIn.dll</span>
+              </div>
+              
+              <div class="file-item" data-link="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">Scholar.dll</span>
+              </div>
+              
+              <div class="file-item" data-link="https://x.com/aryashah2k" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">Twitter.dll</span>
+              </div>
+              
+              <div class="file-item" data-link="https://kaggle.com/aryashah2k" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">Kaggle.dll</span>
+              </div>
+              
+              <div class="file-item" data-link="https://huggingface.co/aryashah00" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">HuggingFace.dll</span>
+              </div>
+              
+              <div class="file-item" data-link="mailto:arya.shah@iitgn.ac.in" tabindex="0">
+                <span class="file-icon">🔗</span>
+                <span class="file-name">Email.dll</span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <main class="workspace" role="main">
+        <article class="fl-window" id="playlist" role="region" aria-label="Experience Timeline">
+          <header class="fl-window-header">
+            <span class="fl-window-title">
+              <span class="fl-window-title-icon">🎼</span>
+              Playlist - Experience Timeline
+            </span>
+            <div class="fl-window-controls">
+              <button class="window-btn minimize" aria-label="Minimize">−</button>
+              <button class="window-btn maximize" aria-label="Maximize">□</button>
+            </div>
+          </header>
+          <div class="fl-window-content" style="padding: 0;">
+            <div class="timeline-header">
+              <div class="track-labels"></div>
+              <div class="timeline-ruler">
+                <div class="ruler-bar">2020</div>
+                <div class="ruler-bar">2021</div>
+                <div class="ruler-bar">2022</div>
+                <div class="ruler-bar">2023</div>
+                <div class="ruler-bar">2024</div>
+                <div class="ruler-bar">2025</div>
+              </div>
+            </div>
+            <div class="timeline-body" id="dawTimelineBody">
+              <!-- Tracks are populated at runtime from data embedded below. -->
+            </div>
+          </div>
+        </article>
+
+        <article class="fl-window" id="mixer" role="region" aria-label="Skills Mixer">
+          <header class="fl-window-header">
+            <span class="fl-window-title">
+              <span class="fl-window-title-icon">🎚️</span>
+              Mixer - Skills
+            </span>
+            <div class="fl-window-controls">
+              <button class="window-btn minimize" aria-label="Minimize">−</button>
+              <button class="window-btn maximize" aria-label="Maximize">□</button>
+            </div>
+          </header>
+          <div class="fl-window-content" style="padding: 0;">
+            <div class="mixer-container" id="mixerContainer" role="img" aria-label="Skills visualization"></div>
+          </div>
+        </article>
+
+        <article class="fl-window" id="projectsPanel" role="region" aria-label="FL Studio Projects">
+          <header class="fl-window-header">
+            <span class="fl-window-title">
+              <span class="fl-window-title-icon">🎹</span>
+              Channel Rack - Projects
+            </span>
+            <div class="fl-window-controls">
+              <button class="window-btn minimize" aria-label="Minimize">−</button>
+              <button class="window-btn close" id="closeProjectsPanel" aria-label="Close">×</button>
+            </div>
+          </header>
+          <div class="projects-toolbar">
+            <div class="projects-search">
+              <span class="projects-search-icon">🔍</span>
+              <input type="text" class="projects-search-input" id="projectsSearchInput"
+                     placeholder="Search by name, genre, or tag..." autocomplete="off">
+            </div>
+            <div class="projects-count">
+              Showing <span id="projectsCount">0</span> projects
+            </div>
+          </div>
+          <div class="fl-window-content" style="padding: 0;">
+            <div class="projects-grid" id="projectsGrid"></div>
+          </div>
+        </article>
+
+        <article class="fl-window" id="notepad" role="dialog" aria-labelledby="notepadTitle" aria-hidden="true">
+          <header class="fl-window-header">
+            <span class="fl-window-title" id="notepadTitle">
+              <span class="fl-window-title-icon">📝</span>
+              Bio.txt
+            </span>
+            <div class="fl-window-controls">
+              <button class="window-btn close" id="closeNotepad" aria-label="Close">×</button>
+            </div>
+          </header>
+          <div class="fl-window-content notepad-content">
+            <p>Hi, I'm <strong>Arya Shah</strong>.</p>
+            <br>
+            <p>AI Engineer &amp; Researcher at IIT Gandhinagar — building ML systems, writing papers, and making music on the side.</p>
+            <br>
+            <p style="color: #888; font-size: 0.9rem;">📍 Gandhinagar, India</p>
+          </div>
+        </article>
+      </main>
+    </div>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script src="/daw/app.js"></script>
+  </body>
+</html>

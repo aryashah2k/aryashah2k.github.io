@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>The Symmetry of Choice: Why To Choose Is Also To Exclude — Arya Shah</title>
+    <meta name="description" content="A combinatorial identity, a life decision, and a meditation on what AI doesn&#39;t show us." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+    <!-- KaTeX (auto-rendered) for Markdown math support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  </head>
+  <body>
+    <header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#about">About</a><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#publications">Publications</a><a href="/blogs/">Blog</a><a href="/terminal/">Terminal</a><a href="/daw/">Music IDE</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main class="container container-sm">
+      <a class="post-back" href="/blogs/">← All posts</a>
+
+      <header class="post-header">
+        <h1>The Symmetry of Choice: Why To Choose Is Also To Exclude</h1>
+        <div class="post-meta">Oct 2025</div>
+        <div class="chips"><span class="chip chip-outline">philosophy</span><span class="chip chip-outline">math</span><span class="chip chip-outline">ai</span></div>
+      </header>
+
+      <article class="prose">
+        <p>Deep within mathematics, in a field that counts and arranges things, lies an equation so simple it feels like a secret. It speaks not just of numbers, but of the very essence of decision, identity, and existence. It has haunted my thoughts for years, revealing new layers of meaning in my life, my work, and even in the artificial minds we are building.</p>
+<p>The equation comes from combinatorics, and it looks like this:</p>
+<p>$\binom{n}{k} = \binom{n}{n-k}$</p>
+<p>Let&#39;s not get lost in the symbols. The meaning is what matters, and it is beautifully intuitive. It says that the number of ways to choose <em>k</em> items from a collection of <em>n</em> is exactly the same as the number of ways to <em>leave behind</em> the other <em>n-k</em> items.</p>
+<p>Think about it. If you have ten books on a shelf and you choose three to take on a journey, you have also, in the very same action, chosen seven to leave on the shelf. The act of selecting is inseparable from the act of excluding. They are two sides of the same coin, a perfect and profound symmetry. This is not just a mathematical curiosity. It is a blueprint for understanding choice itself.</p>
+<h2>The Ghost of a Thousand Other Lives</h2>
+<p>I remember standing in a university library, paralyzed by indecision. I had to choose a major. Would it be philosophy or computer science? To choose one felt like killing the other. Every path I imagined for myself, the life of a programmer building new worlds from logic, or the life of a thinker wrestling with ancient questions, was beautiful. But I could only walk down one. To say &quot;yes&quot; to code was to say &quot;no&quot; to Kant, at least in that formative, all consuming way.</p>
+<p>This is the human weight of our equation. Every choice we make, from our partners to our careers to the city we call home, is also an act of profound exclusion. We are defined not just by the things we embrace, but by the infinite possibilities we let go. Our identity is a sculpture, and the artist&#39;s tool is not just the clay it adds, but the stone it carves away. The ghosts of the lives we did not live are what give shape to the one we do. There is a quiet sadness in this, but also an incredible power. It makes our choices meaningful. They are not trivial, they are declarations of what matters to us, made against the backdrop of all that we must sacrifice.</p>
+<h2>The Curated World of the Algorithm</h2>
+<p>This same principle now governs our digital lives, but with a chilling new scale and invisibility. When an AI recommendation engine suggests a movie, a song, or a news article, it is making a choice. It picks a tiny <em>k</em> from a practically infinite <em>n</em>. For every song you are shown, millions are left in silence. For every perspective you read, thousands are left in the digital dark.</p>
+<p>This is the algorithm&#39;s act of exclusion. We experience its choice as a convenience, a curated reality. Yet, we rarely stop to consider the vast <em>n-k</em> world, the universe of ideas and art the AI has chosen for us <em>not</em> to see. An artificial intelligence trained to identify cats becomes an expert in what is &quot;not a cat.&quot; Its entire reality is built upon this boundary. But when the data it is not shown contains certain types of faces, certain dialects, or certain inconvenient truths, the AI&#39;s exclusion becomes a form of bias. The &quot;not chosen&quot; data becomes a ghost in the machine, shaping its decisions in ways we can neither see nor predict. The act of choosing what data to use for training an AI is a monumental act of exclusion, with consequences that ripple out into the world.</p>
+<h2>Finding Freedom in What We Are Not</h2>
+<p>What can this mathematical symmetry teach us? It teaches us that freedom is not about having limitless options. It is about the deliberate and conscious act of creating boundaries. We find ourselves not by trying to be everything, but by understanding and accepting what we are not.</p>
+<p>To define a community is to know who is not in it. To hold a belief is to understand the beliefs you reject. To love someone is to not love countless others in that same way. Inclusion and exclusion are a single, unified dance.</p>
+<p>The equation $\binom{n}{k} = \binom{n}{n-k}$ is more than a clever trick for counting. It is a mirror reflecting a fundamental truth. Every time you choose, you are performing an act of creation, carving a single reality from the marble of infinite potential. You are both the selector and the excluder. And in that dual role, in that perfect, elegant balance, lies the hidden and beautiful structure of a meaningful life.</p>
+
+      </article>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2026 Arya Shah. All rights reserved.</div>
+    <div>
+      <a href="https://github.com/aryashah2k" target="_blank" rel="noopener">GitHub</a> · <a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+    </div>
+  </div>
+</footer>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.querySelector('.prose'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  </body>
+</html>
