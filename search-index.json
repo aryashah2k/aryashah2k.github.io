@@ -1,39 +1,69 @@
 [
   {
     "type": "blog",
-    "title": "Part 2: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol",
-    "url": "/blogs/multi-sensor-pt-2/",
-    "summary": "A guided tour of the app — markers, CAN bus monitor, error plots, and how to run it yourself."
+    "title": "Sycophancy as a Multilingual Alignment Failure: How Safety Degrades Across Languages, Topics, and Models",
+    "url": "/blogs/sycophancy-across-languages/",
+    "summary": "Shah, Beniwal, Singh, and Silpasuwanchai measure sycophancy across 38 languages and find higher rates in low-resource and zero-shot tiers."
   },
   {
     "type": "blog",
-    "title": "Part 1: Multi-Sensor Vehicle Positioning System Employing Shared Data Protocol",
-    "url": "/blogs/multi-sensor-pt-1/",
-    "summary": "The problem, the vision, and the patent idea behind a GPS-resilient multi-sensor positioning system."
+    "title": "Too Nice to Tell the Truth: Quantifying Agreeableness-Driven Sycophancy in Role-Playing Language Models",
+    "url": "/blogs/too-nice-to-tell-the-truth/",
+    "summary": "Shah, Mishra, and Silpasuwanchai test whether a persona's agreeableness predicts how often a role-playing model endorses the user."
   },
   {
     "type": "blog",
-    "title": "The Symmetry of Choice: Why To Choose Is Also To Exclude",
-    "url": "/blogs/symmetry-of-choice/",
-    "summary": "A combinatorial identity, a life decision, and a meditation on what AI doesn't show us."
+    "title": "In Search of Goodness: Large Scale Benchmarking of Goodness Functions for the Forward-Forward Algorithm",
+    "url": "/blogs/in-search-of-goodness/",
+    "summary": "Shah and Tripathi compare 21 goodness functions for the Forward-Forward algorithm on four image datasets."
+  },
+  {
+    "type": "blog",
+    "title": "Purrturbed but Stable: Human-Cat Invariant Representations Across CNNs, ViTs and Self-Supervised ViTs",
+    "url": "/blogs/purrturbed-but-stable/",
+    "summary": "CVPR 2026. Shah and Tripathi compare frozen vision encoders on paired human frames and cat-vision-filtered frames."
+  },
+  {
+    "type": "project",
+    "title": "Agreeableness and sycophancy",
+    "url": "https://github.com/aryashah2k/Quantifying-Agreeableness-Driven-Sycophancy-in-Role-Playing-Language-Models",
+    "summary": "Code for the ACL 2026 paper on agreeableness and sycophancy."
+  },
+  {
+    "type": "project",
+    "title": "In Search of Goodness",
+    "url": "https://github.com/aryashah2k/In-Search-of-Goodness",
+    "summary": "NeuroAI research on large-scale benchmarking of goodness functions for the Forward-Forward algorithm."
   },
   {
     "type": "project",
     "title": "PersonaVerse",
     "url": "https://github.com/aryashah2k/PersonaVerse",
-    "summary": "Persona-based survey response generation framework using LLMs. Built with Python, HuggingFace, and OpenAI APIs."
+    "summary": "LLM-powered persona-based synthetic survey generation."
+  },
+  {
+    "type": "project",
+    "title": "metaheuRUSTics",
+    "url": "https://github.com/aryashah2k/metaheuRUSTics",
+    "summary": "A Rust library for metaheuristic optimization algorithms."
   },
   {
     "type": "project",
     "title": "3DNNVisualizer",
-    "url": "https://aryashah.me/3DNNVisualizer",
-    "summary": "3D Neural Network visualizer for YOLO v2-tiny, AlexNet, and LeNet. Built with TensorFlow.js and TensorSpace.js."
+    "url": "https://github.com/aryashah2k/3DNNVisualizer",
+    "summary": "3D neural network visualizer for YOLO v2-tiny, AlexNet, and LeNet, built with TensorFlow.js and TensorSpace.js."
   },
   {
-    "type": "project",
-    "title": "MetaHeurustics",
-    "url": "https://crates.io/crates/metaheurustics-rs",
-    "summary": "Rust library for metaheuristic optimization algorithms. 1,400+ downloads on crates.io."
+    "type": "publication",
+    "title": "Sycophancy as a Multilingual Alignment Failure: How Safety Degrades Across Languages, Topics, and Models",
+    "url": "https://arxiv.org/abs/2606.08451",
+    "summary": "arXiv"
+  },
+  {
+    "type": "publication",
+    "title": "Too Nice to Tell the Truth: Quantifying Agreeableness-Driven Sycophancy in Role-Playing Language Models",
+    "url": "https://aclanthology.org/2026.acl-long.1421/",
+    "summary": "ACL 2026"
   },
   {
     "type": "publication",
@@ -45,7 +75,7 @@
     "type": "publication",
     "title": "Purrturbed but Stable: Human-Cat Invariant Representations Across CNNs, ViTs and Self-Supervised ViTs",
     "url": "https://arxiv.org/abs/2511.02404",
-    "summary": "arXiv"
+    "summary": "CVPR 2026"
   },
   {
     "type": "publication",

@@ -5,8 +5,7 @@
   const root = document.documentElement;
 
   const stored = localStorage.getItem(KEY);
-  const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-  const initial = stored || (prefersLight ? "light" : "dark");
+  const initial = stored || "dark";
   root.setAttribute("data-theme", initial);
 
   function wire() {

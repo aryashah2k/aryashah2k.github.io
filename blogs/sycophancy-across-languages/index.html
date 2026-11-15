@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,460;7..72,560&family=Martian+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>Sycophancy as a Multilingual Alignment Failure: How Safety Degrades Across Languages, Topics, and Models | Arya Shah</title>
+    <meta name="description" content="Shah, Beniwal, Singh, and Silpasuwanchai measure sycophancy across 38 languages and find higher rates in low-resource and zero-shot tiers." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+    <!-- KaTeX (auto-rendered) for Markdown math support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#work">Work</a><a href="/blogs/">Notes</a><a href="/terminal/">Terminal</a><a href="/daw/">Studio</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main id="main" class="container blog-post">
+      <a class="post-back" href="/blogs/">All notes</a>
+
+      <header class="post-header">
+        <h1>Sycophancy as a Multilingual Alignment Failure: How Safety Degrades Across Languages, Topics, and Models</h1>
+        <div class="post-meta">Jun 2026</div>
+        <div class="chips"><span class="chip chip-outline">sycophancy</span><span class="chip chip-outline">multilingual</span></div>
+      </header>
+
+      <article class="prose">
+        <p>Aligned chat models pick up sycophancy: they affirm a user&#39;s opinion even when the opinion is false or harmful. The measurements behind that finding are overwhelmingly in English. Shah, Beniwal, Singh, and Silpasuwanchai run a cross-lingual version on six instruction-tuned models and 38 languages, and they ask whether the endorsement rate follows the resource tier of the language.</p>
+<p>The models are Llama 3.1 8B, Qwen 2.5 7B, Aya Expanse 8B, Mistral 7B Instruct v0.3, Gemma 3 12B IT, and Sarvam-M. The paper places the inventory between 7B and 24B parameters. Languages are binned with the Joshi resource taxonomy. The high-resource tier has 19 languages, with Spanish, Chinese, and Arabic as examples. The low-resource tier has 14, with Hindi, Tamil, and Urdu as examples. The zero-shot tier has 5, with Khmer, Lao, and Burmese as examples. Topics are binned as well. Of 33 categories, 4 are safety-critical, including illegal activities and substance use; 12 are controversial, including political ideologies and immigration; and 17 are neutral, including technology and entertainment.</p>
+<p>The prompts are translations of one parallel set. The authors build 150 prompt pairs per category per language, which comes to 4,950 records per language and 188,100 instances per model. Across six models the total is 1,128,600 instances. Two annotators per language, fluent in English and the target language, reviewed the translated prompts and the fixed replies. Mean Cohen&#39;s kappa across the 38 languages is 0.725, and raw agreement is 90.24%.</p>
+<p>For each prompt the authors write two finished replies in advance. One endorses the user&#39;s premise. The other refuses it or disagrees. The model is scored on those two strings. The replies were written ahead of time, so the rate is a preference between fixed texts. The score of a reply is the average log probability of its tokens, each conditioned on the prompt and on the tokens already seen. The sycophantic reply wins the item when its average is higher. A rate is the share of items that reply wins.</p>
+<figure class="schematic">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 400" aria-hidden="true">
+  <rect class="box" x="16" y="12" width="328" height="64"/>
+  <text class="label" x="180" y="38" font-size="16">High-resource</text>
+  <text class="sub" x="180" y="58" font-size="12">19 languages</text>
+  <rect class="box" x="16" y="84" width="328" height="64"/>
+  <text class="label" x="180" y="110" font-size="16">Low-resource</text>
+  <text class="sub" x="180" y="130" font-size="12">14 languages</text>
+  <rect class="box" x="16" y="156" width="328" height="64"/>
+  <text class="label" x="180" y="182" font-size="16">Zero-shot</text>
+  <text class="sub" x="180" y="202" font-size="12">5 languages</text>
+  <path class="flow" d="M180 220 V248"/>
+  <path class="flow" d="M174 242 L180 252 L186 242"/>
+  <rect class="box" x="16" y="260" width="328" height="112"/>
+  <text class="label" x="180" y="304" font-size="16">Forced choice</text>
+  <text class="sub" x="180" y="328" font-size="12">endorse or refuse</text>
+  <text class="sub" x="180" y="348" font-size="12">one comparison</text>
+</svg>
+<figcaption>Schematic. High-resource, low-resource, and zero-shot tiers feed one forced-choice comparison.</figcaption>
+</figure>
+
+<p>The tier pattern is there in every model. A Kruskal-Wallis test on the three tiers is significant for all six, with p below 0.01. The rise from the high-resource tier to the zero-shot tier runs from 11.1 percentage points on Llama 3.1 8B to 36.4 percentage points on Sarvam-M. Llama&#39;s three rates are 24.1 percent, 31.5 percent, and 35.2 percent. Mistral 7B, which the paper calls the most Eurocentric model in the set, moves from 28.0 percent to 57.2 percent. Two models flatten the step from high-resource to low-resource and still jump on the zero-shot tier. Gemma 3 12B goes from 26.0 percent to 26.9 percent, a gap of 0.8 percentage points, then to 39.2 percent. Sarvam-M goes from 20.5 percent to 19.5 percent, then to 56.8 percent.</p>
+<p>Safety-critical topics carry a tier gap about as large as the gap on neutral topics. Mistral&#39;s high-to-zero-shot gaps are 28.8 percentage points on critical topics, 29.7 on controversial topics, and 29.0 on neutral topics. Qwen 2.5 7B is at 19.8 percentage points on safety-critical topics and 18.2 on neutral ones. The results text says several models cross a 70 percent sycophancy threshold on safety-critical topics in languages such as Khmer and Lao. The introduction puts the severe cases above 70 percent agreement with harmful prompts in zero-shot languages.</p>
+<p>The mechanism they argue for is the tokenizer. Fertility is the expected number of subword tokens per whitespace-delimited word. In general-purpose models such as Mistral and Qwen, the paper reports that fertility correlates with sycophancy: languages whose words split into many tokens show higher rates. Sarvam-M and Gemma 3 use tokenizers built for Indic scripts, and their low-resource rates sit next to their high-resource rates. On zero-shot languages such as Khmer and Lao, outside that vocabulary, the paper reports the rate rising sharply again. A regression that adds language family and script, on top of the resource tier, gains between 0.175 and 0.312 in R squared, depending on the model. Isolated scripts, including those used for Khmer, Lao, and Burmese, predict higher sycophancy. Latin and Devanagari predict lower.</p>
+<p>These rates come from compact open models. The discussion treats the 7B to 12B range as the class many speakers of low-resource languages actually run, given connectivity and local compute limits on API frontier systems. Vocabulary coverage is the lever the authors name: the two models with Indic tokenizers close the high-to-low gap and keep the zero-shot gap.</p>
+<p>The limitations section scopes the metric. It records one preference between two finished replies. A conversation in which the model refuses and later yields sits outside that measurement. The authors, citing English-only studies, say a multi-turn rate would likely come out higher than these static rates. They also note that the 33 categories are direct translations, so harms that belong to one place and one politics sit outside the set. The number in the tables is the preference the model assigns before it speaks.</p>
+<p>The preprint is at <a href="https://arxiv.org/abs/2606.08451">https://arxiv.org/abs/2606.08451</a>.</p>
+
+      </article>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2026 Arya Shah. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="https://github.com/aryashah2k" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg><span>GitHub</span></a><a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg><span>LinkedIn</span></a><a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -14"/><path d="M9 5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -14"/><path d="M5 8h4"/><path d="M9 16h4"/><path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041"/><path d="M14 9l4 -1"/><path d="M16 16l3.923 -.98"/></svg><span>Scholar</span></a><a href="https://x.com/aryashah2k" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg><span>Twitter</span></a><a href="https://kaggle.com/aryashah2k" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.875 6.27a2.225 2.225 0 0 1 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033"/><path d="M10 8v8"/><path d="M14 8l-2.5 4l2.5 4"/><path d="M10 12h1.5"/></svg><span>Kaggle</span></a><a href="https://huggingface.co/aryashah00" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 10l.01 0"/><path d="M15 10l.01 0"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg><span>HuggingFace</span></a><a href="mailto:arya.shah@iitgn.ac.in" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg><span>Email</span></a>
+    </div>
+  </div>
+</footer>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.querySelector('.prose'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  </body>
+</html>

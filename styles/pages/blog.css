@@ -1,68 +1,257 @@
 /* ==========================================================================
-   Blog — list + post
+   Notes: list and essay
+   Dark technical editorial. Dates carry the cyan. Serif holds the essay.
    ========================================================================== */
 
-.blog-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--sp-5);
-  margin-top: var(--sp-6);
+.notes {
+  padding-block: var(--sp-12) var(--sp-16);
 }
-.blog-card {
-  display: flex;
-  flex-direction: column;
-  padding: var(--sp-6);
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
+
+.notes-head {
+  max-width: 66ch;
+  margin-bottom: var(--sp-8);
+  text-align: left;
+}
+
+.notes-head h1 {
+  margin: 0 0 var(--sp-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.03em;
+  line-height: var(--lh-tight);
+}
+
+.notes-head p {
+  margin: 0;
+  max-width: 66ch;
+  font-family: var(--font-serif);
+  font-size: var(--fs-lg);
+  line-height: 1.7;
+  color: var(--fg-muted);
+}
+
+/* Injected list: ol.note-index > li > a > time + title + summary */
+.note-index {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--border);
+}
+
+.note-index li {
+  margin: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.note-index li + li {
+  margin-top: 0;
+}
+
+.note-index a {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  column-gap: var(--sp-6);
+  row-gap: var(--sp-2);
+  padding-block: var(--sp-5);
+  text-align: left;
   text-decoration: none;
   color: inherit;
-  transition: all var(--dur-med) var(--ease-out);
+  background: transparent;
 }
-.blog-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-1);
+
+.note-index a:hover {
   color: inherit;
+  background: var(--bg-elev);
 }
-.blog-card .blog-date {
+
+.note-index time {
+  grid-row: 1 / span 2;
+  padding-top: 0.2rem;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
-  color: var(--fg-muted);
-  margin-bottom: var(--sp-2);
+  font-weight: var(--fw-regular);
+  line-height: 1.4;
+  color: var(--accent);
 }
-.blog-card h3 {
+
+.note-title {
+  font-family: var(--font-display);
   font-size: var(--fs-lg);
-  margin-bottom: var(--sp-2);
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.02em;
+  line-height: var(--lh-snug);
+  color: var(--fg);
+  text-wrap: balance;
+}
+
+.note-sum {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+/* Essay */
+.blog-post {
+  padding-block: var(--sp-10) var(--sp-16);
+  text-align: left;
+}
+
+.post-back {
+  display: inline-block;
+  margin-bottom: var(--sp-8);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--fg-muted);
+  text-decoration: none;
+}
+
+.post-back:hover {
   color: var(--fg);
 }
-.blog-card p { color: var(--fg-muted); font-size: var(--fs-sm); flex: 1; }
-.blog-card .chips { margin-top: var(--sp-3); }
 
-/* Post page */
 .post-header {
-  padding: var(--sp-12) 0 var(--sp-8);
-  text-align: center;
+  max-width: 66ch;
+  margin: 0 0 var(--sp-8);
+  padding: 0 0 var(--sp-6);
   border-bottom: 1px solid var(--border);
-  margin-bottom: var(--sp-10);
+  text-align: left;
 }
+
 .post-header h1 {
-  font-size: clamp(var(--fs-2xl), 4vw, var(--fs-4xl));
-  max-width: 24ch;
-  margin-inline: auto;
-  margin-bottom: var(--sp-3);
+  max-width: 66ch;
+  margin: 0 0 var(--sp-4);
+  margin-inline: 0;
+  font-family: var(--font-display);
+  font-size: clamp(var(--fs-2xl), 3vw, var(--fs-3xl));
+  font-weight: var(--fw-medium);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-align: left;
 }
+
 .post-header .post-meta {
   font-family: var(--font-mono);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
+  color: var(--accent);
+}
+
+.post-header .chips {
+  margin-top: var(--sp-4);
+}
+
+.blog-post .chip {
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--fg-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-regular);
+  letter-spacing: 0;
+}
+
+.blog-post .prose {
+  max-width: 66ch;
+  margin-inline: 0;
+  font-family: var(--font-serif);
+  font-size: var(--fs-lg);
+  font-weight: 460;
+  line-height: 1.7;
+  color: var(--fg);
+}
+
+.blog-post .prose h2,
+.blog-post .prose h3 {
+  font-family: var(--font-display);
+  line-height: var(--lh-snug);
+}
+
+.blog-post .prose p {
+  overflow-wrap: break-word;
+}
+
+.blog-post .math-display {
+  margin: var(--sp-6) 0;
+  overflow-x: auto;
+  font-family: var(--font-serif);
+}
+
+.blog-post .prose a {
+  color: var(--fg);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--border-strong);
+  text-underline-offset: 0.18em;
+}
+
+.blog-post .prose a:hover {
+  color: var(--fg);
+  text-decoration-color: var(--accent);
+}
+
+.blog-post .schematic {
+  margin: var(--sp-8) 0;
+  padding: var(--sp-4);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  background: var(--bg-elev);
+}
+
+.blog-post .schematic svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.blog-post .schematic .box {
+  fill: var(--bg);
+  stroke: var(--border-strong);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.blog-post .schematic .flow {
+  fill: none;
+  stroke: var(--fg-subtle);
+  stroke-width: 1.25;
+  vector-effect: non-scaling-stroke;
+}
+
+.blog-post .schematic .label,
+.blog-post .schematic .sub {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  text-anchor: middle;
+}
+
+.blog-post .schematic .label {
+  fill: var(--fg);
+}
+
+.blog-post .schematic .sub {
+  fill: var(--fg-muted);
+}
+
+.blog-post .schematic figcaption {
+  margin: var(--sp-4) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
   color: var(--fg-muted);
 }
-.post-back {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  color: var(--fg-muted);
-  font-size: var(--fs-sm);
-  margin-bottom: var(--sp-6);
+
+@media (max-width: 640px) {
+  .note-index a {
+    grid-template-columns: 1fr;
+    row-gap: var(--sp-2);
+  }
+
+  .note-index time {
+    grid-row: auto;
+    padding-top: 0;
+  }
 }
-.post-back:hover { color: var(--accent); }

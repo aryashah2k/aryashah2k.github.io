@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="author" content="Arya Shah" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,460;7..72,560&family=Martian+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap"
+/>
+<link rel="stylesheet" href="/styles/main.css" />
+<script>
+  /* Pre-apply theme to avoid flash */
+  (function () {
+    try {
+      var t = localStorage.getItem("theme");
+      if (!t) t = "dark";
+      document.documentElement.setAttribute("data-theme", t);
+    } catch (_) {}
+  })();
+</script>
+
+    <title>In Search of Goodness: Large Scale Benchmarking of Goodness Functions for the Forward-Forward Algorithm | Arya Shah</title>
+    <meta name="description" content="Shah and Tripathi compare 21 goodness functions for the Forward-Forward algorithm on four image datasets." />
+    <link rel="stylesheet" href="/styles/pages/blog.css" />
+    <!-- KaTeX (auto-rendered) for Markdown math support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-nav" data-open="false">
+  <a class="brand" href="/">Arya Shah</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M4 7h16M4 12h16M4 17h16" />
+    </svg>
+  </button>
+  <nav aria-label="Primary">
+    <a href="/#work">Work</a><a href="/blogs/">Notes</a><a href="/terminal/">Terminal</a><a href="/daw/">Studio</a>
+  </nav>
+  <div class="nav-actions">
+    <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+
+    <main id="main" class="container blog-post">
+      <a class="post-back" href="/blogs/">All notes</a>
+
+      <header class="post-header">
+        <h1>In Search of Goodness: Large Scale Benchmarking of Goodness Functions for the Forward-Forward Algorithm</h1>
+        <div class="post-meta">Nov 2025</div>
+        <div class="chips"><span class="chip chip-outline">goodness</span><span class="chip chip-outline">learning</span></div>
+      </header>
+
+      <article class="prose">
+        <p>Backpropagation trains a deep network by carrying an error down the layers. That return path needs the forward weights in transpose, the weight-transport problem, and it needs one error computed at the top of the network. Hinton&#39;s Forward-Forward algorithm replaces the global backward pass with a second forward pass. Each layer still minimizes a local loss. One pass uses positive data: real samples the layer should treat as good. The other uses negative data: corrupted or conflicting samples the layer should treat as bad. The lesson is a scalar, goodness, computed from the layer&#39;s own activity. The local loss pushes positive goodness above a threshold and negative goodness below it.</p>
+<p>Hinton&#39;s account used the sum of squares of those activities. Shah and Tripathi treat the formula as an open choice. A sum of squares rewards strong activity on real samples. Other objectives ask for other structure: a margin between a positive sample and a negative one, a prediction of the layer&#39;s own activity, a sparse code, a small game among the units. If Forward-Forward is the local alternative to backpropagation, goodness is the signal the layer actually gets. They implement 21 functions in one registry and train the same network under each of them.</p>
+<p>The network is a multilayer perceptron: 4 fully connected layers, 2000 units each, a ReLU that still lets the local loss send gradient through the negative part, and Adam. Shared settings are a learning rate of 0.001, batch size 100, and 20 epochs. The sets are MNIST, FashionMNIST, CIFAR-10, and STL-10. Images are flattened and normalized. Negative samples follow Hinton&#39;s supervised trick. The class label is written into the picture. A positive example pairs the image with the correct one-hot label. A negative example pairs the same image with an incorrect label. The pixels are shared, so the layer has to learn which label belongs with them.</p>
+<p>With goodness written as G and the threshold as theta, the local loss is</p>
+<div class="math-display">$L=\log(1+\exp(-(G(y_{pos})-\theta)))+\log(1+\exp(G(y_{neg})-\theta)).$</div>
+
+<figure class="schematic">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 280" aria-hidden="true">
+  <rect class="box" x="12" y="16" width="160" height="84"/>
+  <text class="label" x="92" y="50" font-size="14">Positive pass</text>
+  <text class="sub" x="92" y="72" font-size="11">correct label</text>
+  <rect class="box" x="188" y="16" width="160" height="84"/>
+  <text class="label" x="268" y="50" font-size="14">Negative pass</text>
+  <text class="sub" x="268" y="72" font-size="11">wrong label</text>
+  <path class="flow" d="M92 100 V128"/>
+  <path class="flow" d="M268 100 V128"/>
+  <path class="flow" d="M92 128 H268"/>
+  <path class="flow" d="M180 128 V148"/>
+  <path class="flow" d="M174 142 L180 152 L186 142"/>
+  <rect class="box" x="16" y="156" width="328" height="92"/>
+  <text class="label" x="180" y="196" font-size="16">Goodness</text>
+  <text class="sub" x="180" y="220" font-size="12">scalar G on the layer</text>
+</svg>
+<figcaption>Schematic. A positive forward pass and a negative forward pass meet in a goodness function.</figcaption>
+</figure>
+
+<p>They record two accuracies, plus energy and carbon. Multi-pass accuracy is the native Forward-Forward readout: score candidate labels by accumulated goodness on a neutral input, and keep the label with the highest total. Classification accuracy is a linear classifier fit on the frozen representation, a check on linear separability. CodeCarbon logs energy for the GPU, the CPU, and RAM, and turns that energy into carbon using the local grid. The abstract reports that both accuracy and carbon move when the goodness function changes, and that some functions outperform the sum-of-squares baseline.</p>
+<p>The abstract reports three classification accuracies from the sweep. game_theoretic_local reaches 97.15 percent on MNIST. softmax_energy_margin_local reaches 82.84 percent on FashionMNIST. triplet_margin_local reaches 37.69 percent on STL-10. Three functions, three datasets. Sum of squares remains the baseline in the same tables. Which function leads depends on the dataset and on which accuracy is in view, the linear probe or the multi-pass readout. On CIFAR-10, sparse_l1_local leads the multi-pass column and also posts the lowest carbon of those runs. The algebra inside G is doing real work on both axes.</p>
+<p>Goodness is the teaching signal at the layer. Sum of squares raises it on real samples and lowers it on hybrids. A margin keeps positive and negative samples apart. Predictive coding asks a layer to account for its own activity. Game-theoretic goodness treats the units as players. The benchmark logs what those choices do to accuracy and to energy on four ordinary image sets. Shah and Tripathi argue that a Forward-Forward network should have its goodness chosen on purpose, with the carbon of that choice counted, because the formula changes both the score and the energy.</p>
+<p>Some of the 21 functions fail in a way the authors treat as a limit of local learning. bcm_local and outlier_trimmed_energy_local sometimes learn no usable representation. On MNIST, a balanced set of ten classes, the BCM run lands at chance. Their account is instability in a greedy, layer-wise regime. The BCM threshold slides with the statistics of the stream. Without a global error signal to correct a runaway update, the threshold can fail to settle, and units can saturate or go silent. Trimming outliers can discard signal along with the extremes. The stated limit is that these local rules need careful tuning and homeostatic mechanisms if they are to stay stable. Global optimizers, the authors note, often take that stability for granted.</p>
+<p>The preprint is at <a href="https://arxiv.org/abs/2511.18567">https://arxiv.org/abs/2511.18567</a>, and the code is at <a href="https://github.com/aryashah2k/In-Search-of-Goodness">https://github.com/aryashah2k/In-Search-of-Goodness</a>.</p>
+
+      </article>
+    </main>
+
+    <footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2026 Arya Shah. All rights reserved.</div>
+    <div class="footer-links">
+      <a href="https://github.com/aryashah2k" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg><span>GitHub</span></a><a href="https://www.linkedin.com/in/arya--shah/" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg><span>LinkedIn</span></a><a href="https://scholar.google.com/citations?user=bURGVj0AAAAJ&amp;hl=en" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -14"/><path d="M9 5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -14"/><path d="M5 8h4"/><path d="M9 16h4"/><path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041"/><path d="M14 9l4 -1"/><path d="M16 16l3.923 -.98"/></svg><span>Scholar</span></a><a href="https://x.com/aryashah2k" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg><span>Twitter</span></a><a href="https://kaggle.com/aryashah2k" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.875 6.27a2.225 2.225 0 0 1 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033"/><path d="M10 8v8"/><path d="M14 8l-2.5 4l2.5 4"/><path d="M10 12h1.5"/></svg><span>Kaggle</span></a><a href="https://huggingface.co/aryashah00" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 10l.01 0"/><path d="M15 10l.01 0"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg><span>HuggingFace</span></a><a href="mailto:arya.shah@iitgn.ac.in" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg><span>Email</span></a>
+    </div>
+  </div>
+</footer>
+
+    <script src="/scripts/theme.js"></script>
+    <script src="/scripts/nav.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+      onload="renderMathInElement(document.querySelector('.prose'), {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  </body>
+</html>

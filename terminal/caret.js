@@ -7,7 +7,28 @@ function $(elid) {
   
   function init() {
     cursor = $("cursor");
-    cursor.style.left = "0px";
+    if (cursor) cursor.style.left = "0px";
+    startCursorBlink();
+  }
+
+  function startCursorBlink() {
+    var el = $("cursor");
+    if (!el) return;
+    var reduce = false;
+    try {
+      reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (e) {}
+    el.style.animation = "none";
+    if (reduce || typeof gsap === "undefined") {
+      el.style.opacity = "1";
+      return;
+    }
+    gsap.set(el, { opacity: 1 });
+    gsap.timeline({ repeat: -1 })
+      .set(el, { opacity: 1 })
+      .to(el, { opacity: 1, duration: 0.5, ease: "none" })
+      .set(el, { opacity: 0 })
+      .to(el, { opacity: 0, duration: 0.5, ease: "none" });
   }
   
   function nl2br(txt) {

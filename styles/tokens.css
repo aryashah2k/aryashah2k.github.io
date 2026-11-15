@@ -1,56 +1,56 @@
 /* ==========================================================================
-   Design Tokens
-   Single source of truth for colors, typography, spacing, radii, and layout.
-   Every other stylesheet must reference these variables — never hardcode.
+   Design tokens
+   Dark technical editorial. One cyan signal. Studio warmth is --warm only.
    ========================================================================== */
 
 :root {
-  /* ----- Palette (dark, default) ----- */
-  --bg:            #0f1115;
-  --bg-elev:       #161a22;
-  --bg-elev-2:     #1c2130;
-  --fg:            #e7e9ee;
-  --fg-muted:      #9aa3b2;
-  --fg-subtle:     #6b7280;
-  --border:        #242a36;
-  --border-strong: #34405a;
+  --bg:            oklch(0.16 0.012 230);
+  --bg-elev:       oklch(0.21 0.014 230);
+  --bg-elev-2:     oklch(0.255 0.016 230);
+  --fg:            oklch(0.94 0.008 230);
+  --fg-muted:      oklch(0.76 0.018 230);
+  --fg-subtle:     oklch(0.64 0.02 230);
+  --border:        oklch(0.30 0.014 230);
+  --border-strong: oklch(0.42 0.02 230);
 
-  --accent:        #7c5cff;
-  --accent-hover:  #9077ff;
-  --accent-soft:   rgba(124, 92, 255, 0.16);
-  --success:       #3ecf8e;
-  --warning:       #f5a524;
-  --danger:        #ff6b6b;
+  --accent:        oklch(0.84 0.11 200);
+  --accent-hover:  oklch(0.90 0.08 200);
+  --accent-soft:   oklch(0.84 0.11 200 / 0.16);
+  --accent-ink:    oklch(0.22 0.03 210);
 
-  --code-bg:       #0b0d12;
+  --warm:          oklch(0.78 0.14 72);
+  --warm-dim:      oklch(0.78 0.14 72 / 0.18);
 
-  /* ----- Typography ----- */
-  --font-sans:   "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-                 Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono:   "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
-                 Consolas, "Liberation Mono", monospace;
-  --font-serif:  Georgia, "Times New Roman", serif;
+  --success:       oklch(0.78 0.12 155);
+  --warning:       oklch(0.80 0.12 85);
+  --danger:        oklch(0.70 0.15 25);
 
-  --fs-xs:   0.8125rem;  /* 13px */
-  --fs-sm:   0.9375rem;  /* 15px */
-  --fs-md:   1rem;       /* 16px */
-  --fs-lg:   1.125rem;   /* 18px */
-  --fs-xl:   1.375rem;   /* 22px */
-  --fs-2xl:  1.75rem;    /* 28px */
-  --fs-3xl:  2.25rem;    /* 36px */
-  --fs-4xl:  3rem;       /* 48px */
+  --code-bg:       oklch(0.13 0.012 230);
 
-  --lh-tight:  1.2;
-  --lh-snug:   1.35;
-  --lh-normal: 1.6;
-  --lh-relaxed: 1.75;
+  --font-display: "Schibsted Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  --font-sans:    "Schibsted Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+  --font-serif:   "Literata", "Iowan Old Style", Palatino, "Palatino Linotype", Georgia, serif;
+  --font-mono:    "Martian Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
 
-  --fw-regular: 400;
-  --fw-medium:  500;
+  --fs-xs:   0.75rem;
+  --fs-sm:   0.9375rem;
+  --fs-md:   1rem;
+  --fs-lg:   1.125rem;
+  --fs-xl:   1.35rem;
+  --fs-2xl:  1.75rem;
+  --fs-3xl:  2.4rem;
+  --fs-4xl:  clamp(3.1rem, 7.4vw, 5.75rem);
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.35;
+  --lh-normal:  1.6;
+  --lh-relaxed: 1.7;
+
+  --fw-regular:  400;
+  --fw-medium:   500;
   --fw-semibold: 600;
-  --fw-bold:    700;
+  --fw-bold:     700;
 
-  /* ----- Spacing (4px base) ----- */
   --sp-1:  0.25rem;
   --sp-2:  0.5rem;
   --sp-3:  0.75rem;
@@ -64,46 +64,42 @@
   --sp-20: 5rem;
   --sp-24: 6rem;
 
-  /* ----- Radii & shadow ----- */
-  --r-sm: 6px;
-  --r-md: 10px;
-  --r-lg: 16px;
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 8px;
   --r-full: 999px;
 
-  --shadow-1: 0 1px 2px rgba(0,0,0,0.35), 0 4px 12px rgba(0,0,0,0.25);
-  --shadow-2: 0 4px 8px rgba(0,0,0,0.4), 0 16px 32px rgba(0,0,0,0.3);
+  --shadow-1: none;
+  --shadow-2: none;
 
-  /* ----- Layout ----- */
-  --container:    1100px;
-  --container-sm: 780px;
+  --container:    1080px;
+  --container-sm: 68ch;
   --nav-h:        64px;
 
-  /* ----- Motion ----- */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --dur-fast: 120ms;
   --dur-med:  220ms;
   --dur-slow: 420ms;
 }
 
-/* ----- Light theme overrides ----- */
 [data-theme="light"] {
-  --bg:            #ffffff;
-  --bg-elev:       #f6f7fb;
-  --bg-elev-2:     #eceef5;
-  --fg:            #121418;
-  --fg-muted:      #4b5563;
-  --fg-subtle:     #6b7280;
-  --border:        #e5e8ef;
-  --border-strong: #cfd4e0;
+  --bg:            oklch(0.975 0.006 230);
+  --bg-elev:       oklch(0.945 0.008 230);
+  --bg-elev-2:     oklch(0.91 0.012 230);
+  --fg:            oklch(0.22 0.02 240);
+  --fg-muted:      oklch(0.40 0.02 240);
+  --fg-subtle:     oklch(0.48 0.02 240);
+  --border:        oklch(0.88 0.01 230);
+  --border-strong: oklch(0.78 0.015 230);
 
-  --accent:        #5b3df5;
-  --accent-hover:  #4a2fd9;
-  --accent-soft:   rgba(91, 61, 245, 0.12);
+  --accent:        oklch(0.46 0.11 210);
+  --accent-hover:  oklch(0.38 0.11 210);
+  --accent-soft:   oklch(0.46 0.11 210 / 0.12);
+  --accent-ink:    oklch(0.98 0.005 230);
 
-  --code-bg:       #f1f3f9;
-
-  --shadow-1: 0 1px 2px rgba(16,24,40,0.06), 0 4px 12px rgba(16,24,40,0.08);
-  --shadow-2: 0 4px 8px rgba(16,24,40,0.08), 0 16px 32px rgba(16,24,40,0.1);
+  --code-bg:       oklch(0.94 0.008 230);
+  --shadow-1: none;
+  --shadow-2: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -65,7 +65,7 @@ function startTerminal() {
 
   // After load animation, quickly start the terminal (reduced delay)
   setTimeout(function() {
-    boucleWrite(run, "", 120);
+    boucleWrite(run, "", prefersReducedMotion() ? 0 : 120);
     overlay.style.display = "none";
     overlay.innerHTML = "";
     textarea.focus();
@@ -213,6 +213,12 @@ function testValue(test) {
     case "about":
       boucleWrite(about, "colored margin", 120);
       break;
+    case "projects":
+      boucleWrite(projects, "", 80);
+      break;
+    case "papers":
+      boucleWrite(papers, "", 80);
+      break;
     case "social":
       boucleWrite(social, "colored", 120);
       break;
@@ -233,10 +239,7 @@ function testValue(test) {
       playSound(passwordEnter, 0.5);
       break;
     case "download":
-      addLine("download start in 1 s", "colored", 0);
-      setTimeout(function() {
-        window.open(download, "_blank");
-      }, 1000);
+      addLine("No resume file is posted.", "colored", 0);
       break;
 
     //social link
@@ -246,16 +249,12 @@ function testValue(test) {
     case "social linkedin":
       openTab(linkedin, 1000);
       break;
-    case "social behance":
-      openTab(behance, 1000);
-      break;
-    /*
     case "social twitter":
       openTab(twitter, 1000);
       break;
-    case "social instagram":
-      openTab(instagram, 1000);
-      break;*/
+    case "social scholar":
+      openTab(scholar, 1000);
+      break;
 
     //color
     case "color":
@@ -339,39 +338,86 @@ function testValue(test) {
   }
 }
 
+function prefersReducedMotion() {
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch (e) {
+    return false;
+  }
+}
+
 function boucleWrite(name, classe, time) {
   name.forEach(function(item, index) {
-    addLine(item, classe, index * time);
+    var line = item;
+    var lineClass = classe;
+    if (item && typeof item === "object" && typeof item.text === "string") {
+      line = item.text;
+      if (typeof item.cls === "string") lineClass = item.cls;
+    }
+    addLine(line, lineClass, index * time);
   });
 }
 
 function addLine(text, classe, time) {
+  if (typeof text !== "string") text = String(text);
+  var isAscii = !!(classe && (" " + classe + " ").indexOf(" ascii ") !== -1);
+  if (!isAscii && text.indexOf("#") !== -1 && /^[# ]+$/.test(text)) {
+    isAscii = true;
+    classe = classe ? classe + " ascii" : "ascii";
+  }
   var t = "";
-  for (let i = 0; i < text.length; i++) {
-    if (text.charAt(i) == " " && text.charAt(i + 1) == " ") {
-      t += "&nbsp;&nbsp;";
-      i++;
-    } else {
-      t += text.charAt(i);
+  if (isAscii) {
+    t = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  } else {
+    for (var i = 0; i < text.length; i++) {
+      if (text.charAt(i) == " " && text.charAt(i + 1) == " ") {
+        t += "&nbsp;&nbsp;";
+        i++;
+      } else {
+        t += text.charAt(i);
+      }
     }
   }
 
   setTimeout(function() {
     var txt = document.createElement("p");
     txt.innerHTML = t;
-    txt.className = classe;
+    txt.className = classe || "";
 
-    before.parentNode.insertBefore(txt, before);
+    if (isAscii) {
+      var block = document.getElementById("ascii-banner");
+      if (!block) {
+        block = document.createElement("div");
+        block.id = "ascii-banner";
+        block.className = "ascii-banner";
+        block.setAttribute("aria-hidden", "true");
+        before.parentNode.insertBefore(block, before);
+      }
+      block.appendChild(txt);
+    } else {
+      before.parentNode.insertBefore(txt, before);
+    }
 
     window.scrollTo(0, document.body.offsetHeight);
-    playAlea()
+    playAlea();
   }, time);
 }
 
 //play sound with effects
 function playSound(audio, vol) {
-  audio.volume = vol;
-  audio.play();
+  if (!audio || typeof audio.play !== "function") return;
+  try {
+    audio.volume = vol;
+  } catch (e) {}
+  var pending;
+  try {
+    pending = audio.play();
+  } catch (e) {
+    return;
+  }
+  if (pending && typeof pending.catch === "function") {
+    pending.catch(function () {});
+  }
 }
 
 // function play sound type alea
@@ -488,17 +534,29 @@ for (let j = 0; j < project.length; j++) {
   back[j].addEventListener("mousedown", function() {
     enableProject();
   });
+  back[j].addEventListener("click", function(e) {
+    e.preventDefault();
+  });
   projectLink[j].addEventListener("mousedown", function() {
     let u = document.getElementById(projectLink[j].dataset.directionProject);
     u.classList.add("prez-show");
     topF.innerHTML = projectLink[j].dataset.top;
+  });
+  projectLink[j].addEventListener("click", function(e) {
+    e.preventDefault();
+  });
+}
+var chromeLinks = document.querySelectorAll(".term-window .linkTop");
+for (var mi = 0; mi < chromeLinks.length; mi++) {
+  chromeLinks[mi].addEventListener("click", function(e) {
+    e.preventDefault();
   });
 }
 
 function enableProject() {
   for (let i = 0; i < project.length; i++) {
     project[i].classList.remove("prez-show");
-    if (topF) topF.innerHTML = "Arya Shah — Works";
+    if (topF) topF.innerHTML = "Arya Shah: Works";
   }
 }
 
@@ -506,13 +564,13 @@ function enableProject() {
  * Auto-boot: the /terminal/ route exists to *be* the terminal, so flip the
  * body into terminal mode on page load and stream the welcome banner.
  * Also keep the hidden #setter textarea focused so typed keys always reach
- * the onkeypress/writeit pipeline — clicking the nav, a link, or a button
+ * the onkeypress/writeit pipeline. Clicking the nav, a link, or a button
  * would otherwise steal focus and silently break command input.
  * ---------------------------------------------------------------------- */
 (function bootTerminal() {
   function boot() {
     document.body.classList.add("terminal-active");
-    try { boucleWrite(run, "", 80); } catch (e) { console.error(e); }
+    try { boucleWrite(run, "", prefersReducedMotion() ? 0 : 80); } catch (e) { console.error(e); }
     if (textarea) textarea.focus();
 
     // Refocus the textarea whenever the user clicks somewhere that

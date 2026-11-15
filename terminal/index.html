@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,460;7..72,560&family=Martian+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap"
 />
 <link rel="stylesheet" href="/styles/main.css" />
 <script>
@@ -18,18 +18,19 @@
   (function () {
     try {
       var t = localStorage.getItem("theme");
-      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      if (!t) t = "dark";
       document.documentElement.setAttribute("data-theme", t);
     } catch (_) {}
   })();
 </script>
 
-    <title>Terminal — Arya Shah</title>
+    <title>Terminal: Arya Shah</title>
     <meta name="description" content="Interactive terminal portfolio for Arya Shah." />
     <link rel="stylesheet" href="/terminal/terminal.css" />
   </head>
-  <body>
-    <header class="site-nav" data-open="false">
+  <body class="terminal-active">
+    <a class="skip-link" href="#main">Skip to main content</a>
+<header class="site-nav" data-open="false">
   <a class="brand" href="/">Arya Shah</a>
   <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -37,7 +38,7 @@
     </svg>
   </button>
   <nav aria-label="Primary">
-    <a href="/#about">About</a><a href="/#experience">Experience</a><a href="/#projects">Projects</a><a href="/#publications">Publications</a><a href="/blogs/">Blog</a><a href="/terminal/">Terminal</a><a href="/daw/">Music IDE</a>
+    <a href="/#work">Work</a><a href="/blogs/">Notes</a><a href="/terminal/">Terminal</a><a href="/daw/">Studio</a>
   </nav>
   <div class="nav-actions">
     <button class="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
@@ -57,7 +58,7 @@
     <div class="term-window">
       <div class="resize-drag">
         <div class="top">
-          <p id="toped">Arya Shah — Works</p>
+          <p id="toped">Arya Shah: Works</p>
           <span id="close" aria-label="Close" title="Close">×</span>
         </div>
         <div class="undrag">
@@ -84,22 +85,25 @@
           <div class="prez prez-2" id="p1">
             <a href="#" class="btn btn-back">Back</a>
             <h3>Projects</h3>
-            <p>See the <a href="/#projects">Projects</a> section of the landing page for the full list.</p>
+            <p><a href="https://github.com/aryashah2k/metaheuRUSTics" target="_blank" rel="noopener">metaheuRUSTics</a>: A Rust library for metaheuristic optimization algorithms.</p>
+            <p><a href="https://github.com/aryashah2k/In-Search-of-Goodness" target="_blank" rel="noopener">In Search of Goodness</a>: Benchmark of goodness functions for the Forward-Forward algorithm.</p>
+            <p><a href="https://github.com/aryashah2k/Quantifying-Agreeableness-Driven-Sycophancy-in-Role-Playing-Language-Models" target="_blank" rel="noopener">Agreeableness and sycophancy</a>: Code for the ACL 2026 paper.</p>
           </div>
           <div class="prez prez-2" id="p2">
             <a href="#" class="btn btn-back">Back</a>
             <h3>Blog</h3>
-            <p>Long-form writing lives on the <a href="/blogs/">blog page</a>.</p>
+            <p>Long-form writing lives on the <a href="/blogs/">blog</a>.</p>
           </div>
           <div class="prez prez-2" id="p3">
             <a href="#" class="btn btn-back">Back</a>
             <h3>Music IDE</h3>
-            <p>Open the <a href="/daw/">Music IDE</a> for FL Studio projects and audio work.</p>
+            <p><a href="/daw/">Studio</a>. The studio has empty slots, no released tracks.</p>
           </div>
           <div class="prez prez-2" id="p4">
             <a href="#" class="btn btn-back">Back</a>
             <h3>Experience</h3>
-            <p>See the <a href="/#experience">Experience</a> section of the landing page.</p>
+            <p>Senior AI engineer, Aistra Labs, Mumbai, June 2026 to present.</p>
+            <p>M.Tech, Artificial Intelligence, IIT Gandhinagar, August 2024 to June 2026.</p>
           </div>
 
           <div class="bottom">
@@ -111,7 +115,9 @@
     </div>
 
     <!-- Terminal output stream -->
-    <div id="terminal"><a id="before"></a></div>
+    <div id="main" tabindex="-1">
+      <div id="terminal"><a id="before"></a></div>
+    </div>
 
     <!-- Terminal input row (pinned bottom) -->
     <div id="cmd" onclick="document.getElementById('setter').focus();">
@@ -133,6 +139,7 @@
     <!-- A no-op #start element so legacy main.js can attach cleanly -->
     <button id="start" hidden aria-hidden="true"></button>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/gsap.min.js"></script>
     <script src="/scripts/theme.js"></script>
     <script src="/scripts/nav.js"></script>
     <script src="/terminal/interacth.js"></script>
