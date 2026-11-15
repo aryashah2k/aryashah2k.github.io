@@ -27,7 +27,7 @@ function range(start, end) {
   const right = end ? fmtDate(end) : "Present";
   if (!left && !end) return "";
   if (!left) return right;
-  return `${left} – ${right}`;
+  return `${left} to ${right}`;
 }
 
 /* ---- About ---- */
@@ -175,35 +175,102 @@ function renderSkills(categories) {
   return `<div class="skills-root">${categories.map((c) => renderSkillGroup(c, 0)).join("")}</div>`;
 }
 
-/* ---- Blogs preview ---- */
-function renderBlogsPreview(blogs, limit = 3) {
-  if (!blogs.length) return "<p class='text-muted'>No posts yet.</p>";
-  const items = blogs.slice(0, limit);
-  return `<div class="blog-list">${items
+function noteIndex(items) {
+  if (!items.length) return "<p class='text-muted'>No notes yet.</p>";
+  return `<ol class="note-index">${items
     .map(
       (b) => `
-      <a class="blog-card" href="/blogs/${escapeHtml(b.slug)}/">
-        <div class="blog-date">${escapeHtml(fmtDate(b.date))}</div>
-        <h3>${escapeHtml(b.title)}</h3>
-        <p>${escapeHtml(b.summary || "")}</p>
-      </a>`
+      <li>
+        <a href="/blogs/${escapeHtml(b.slug)}/">
+          <time datetime="${escapeHtml(b.date || "")}">${escapeHtml(fmtDate(b.date))}</time>
+          <span class="note-title">${escapeHtml(b.title)}</span>
+          ${b.summary ? `<span class="note-sum">${escapeHtml(b.summary)}</span>` : ""}
+        </a>
+      </li>`
     )
-    .join("")}</div>`;
+    .join("")}</ol>`;
+}
+
+/* ---- Blogs preview ---- */
+function renderBlogsPreview(blogs, limit = 3) {
+  return noteIndex((blogs || []).slice(0, limit));
 }
 
 /* ---- Blogs full list (blogs/index.html) ---- */
 function renderBlogsList(blogs) {
-  if (!blogs.length) return "<p class='text-muted'>No posts yet.</p>";
-  return `<div class="blog-list">${blogs
-    .map(
-      (b) => `
-      <a class="blog-card" href="/blogs/${escapeHtml(b.slug)}/">
-        <div class="blog-date">${escapeHtml(fmtDate(b.date))}</div>
-        <h3>${escapeHtml(b.title)}</h3>
-        <p>${escapeHtml(b.summary || "")}</p>
-        ${renderChips(b.tags)}
-      </a>`
-    )
+  return noteIndex(blogs || []);
+}
+
+function proofRow(bodyHtml) {
+  return `<div class="proof-row"><div class="proof-body">${bodyHtml}</div></div>`;
+}
+
+function linkList(links) {
+  if (!links || !links.length) return "";
+  return `<p class="proof-more">${links
+    .map((l) => `<a href="${escapeHtml(l.href)}" target="_blank" rel="noopener">${escapeHtml(l.label)}</a>`)
+    .join("")}</p>`;
+}
+
+function venueLine(p) {
+  const year = p.year || "";
+  const venue = p.venue || "";
+  if (venue && year && String(venue).indexOf(String(year)) !== -1) return venue;
+  return [venue, year].filter(Boolean).join(", ");
+}
+
+/* Latest role only. The heading above this row says Now. */
+function renderNow(data) {
+  const x = (data.experience || []).filter((item) => item.featured)[0];
+  if (!x) return "<p class='text-muted'>Nothing listed yet.</p>";
+  const meta = [range(x.start, x.end), x.location].filter(Boolean).join(". ");
+  return `<div class="proof">${proofRow(
+    `<p class="proof-title">${escapeHtml(x.role)}, ${escapeHtml(x.org)}</p>${meta ? `<p class="proof-meta">${escapeHtml(meta)}</p>` : ""}`
+  )}</div>`;
+}
+
+/* Latest degree only. The heading above this row says Education. */
+function renderEduBrief(data) {
+  const x = (data.education || []).filter((item) => item.featured)[0];
+  if (!x) return "<p class='text-muted'>Nothing listed yet.</p>";
+  const meta = [range(x.start, x.end), x.location].filter(Boolean).join(". ");
+  const detail = meta ? `${escapeHtml(x.school)}. ${escapeHtml(meta)}` : escapeHtml(x.school);
+  return `<div class="proof">${proofRow(
+    `<p class="proof-title">${escapeHtml(x.degree)}</p><p class="proof-meta">${detail}</p>`
+  )}</div>`;
+}
+
+/* Featured repos only. The heading above these rows says Work. */
+function renderWorkList(data) {
+  const projects = (data.projects || []).filter((item) => item.featured);
+  if (!projects.length) return "<p class='text-muted'>Nothing listed yet.</p>";
+  return `<div class="proof">${projects
+    .map((p) => {
+      const title = p.url
+        ? `<a href="${escapeHtml(p.url)}" target="_blank" rel="noopener">${escapeHtml(p.name)}</a>`
+        : escapeHtml(p.name);
+      return proofRow(
+        `<p class="proof-title">${title}</p>${p.summary ? `<p class="proof-meta">${escapeHtml(p.summary)}</p>` : ""}`
+      );
+    })
+    .join("")}</div>`;
+}
+
+/* Featured papers. Venue text carries CVPR 2026 for Purrturbed. */
+function renderPaperList(data) {
+  const pubs = (data.publications || []).filter((item) => item.featured);
+  if (!pubs.length) return "<p class='text-muted'>Nothing listed yet.</p>";
+  return `<div class="proof">${pubs
+    .map((p) => {
+      const primary = (p.links || [])[0];
+      const title = primary
+        ? `<a href="${escapeHtml(primary.href)}" target="_blank" rel="noopener">${escapeHtml(p.title)}</a>`
+        : escapeHtml(p.title);
+      const meta = venueLine(p);
+      return proofRow(
+        `<p class="proof-title">${title}</p>${meta ? `<p class="proof-meta">${escapeHtml(meta)}</p>` : ""}${linkList(p.links || [])}`
+      );
+    })
     .join("")}</div>`;
 }
 
@@ -225,5 +292,9 @@ module.exports = {
   renderSkills,
   renderBlogsPreview,
   renderBlogsList,
+  renderNow,
+  renderEduBrief,
+  renderWorkList,
+  renderPaperList,
   fmtDate,
 };

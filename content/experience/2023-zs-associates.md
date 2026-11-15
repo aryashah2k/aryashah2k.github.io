@@ -1,11 +1,10 @@
 ---
-role: Associate Software Engineer
-org: ZS Associates
-location: India
-start: 2023-05
+role: Business Technology Solutions Associate
+org: ZS
+location: Pune
+start: 2023-06
 end: 2024-07
-tags: [sql, python, automation, apis]
+featured: false
+tags: [python, automation, apis]
 ---
-Developed automation scripts and APIs using SQL, Python, and Postman to serve
-12M+ users daily. Achieved a 66.67% reduction in manual testing effort through
-reusable test-harness tooling.
+Developed automation scripts and APIs for systems serving 12 million daily users, and testing utilities that reduced manual testing effort by 66.67%. Built a package for real-time dynamic email content generation driven by LLMs.

@@ -37,11 +37,13 @@ function sortByDateDesc(arr, key = "date") {
 }
 
 function sortByStartDesc(arr) {
-  return arr.slice().sort((a, b) => {
-    const da = a.end ? new Date(a.end).getTime() : a.start ? new Date(a.start).getTime() : 0;
-    const db = b.end ? new Date(b.end).getTime() : b.start ? new Date(b.start).getTime() : 0;
-    return db - da;
-  });
+  const score = (x) => {
+    const start = x.start ? new Date(x.start).getTime() : 0;
+    if (!x.end) return 1e15 + (Number.isNaN(start) ? 0 : start);
+    const end = new Date(x.end).getTime();
+    return Number.isNaN(end) ? 0 : end;
+  };
+  return arr.slice().sort((a, b) => score(b) - score(a));
 }
 
 /* ---- Section collectors ---- */
@@ -78,6 +80,7 @@ function collectExperience() {
       end: x.end || "",
       tags: x.tags || [],
       description: x.html,
+      featured: x.featured === true,
       slug: x.slug,
     }))
   );
@@ -92,6 +95,7 @@ function collectEducation() {
       start: x.start || "",
       end: x.end || "",
       description: x.html,
+      featured: x.featured === true,
       slug: x.slug,
     }))
   );
@@ -107,6 +111,7 @@ function collectProjects() {
       date: x.date || "",
       summary: x.summary || "",
       description: x.html,
+      featured: x.featured === true,
       slug: x.slug,
     }))
   );
@@ -122,6 +127,7 @@ function collectPublications() {
       year: x.year || "",
       links: x.links || [],
       description: x.html,
+      featured: x.featured === true,
       slug: x.slug,
     }))
   );

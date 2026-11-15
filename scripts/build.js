@@ -85,15 +85,10 @@ function build() {
   {
     const tpl = read(path.join(SRC, "index.html"));
     let html = renderTemplate(tpl, baseCtx, partials);
-    html = injectRegion(html, "about", S.renderAbout(data.about));
-    html = injectRegion(html, "news", S.renderNews(data.news));
-    html = injectRegion(html, "experience", S.renderExperience(data.experience));
-    html = injectRegion(html, "education", S.renderEducation(data.education));
-    html = injectRegion(html, "projects", S.renderProjects(data.projects));
-    html = injectRegion(html, "publications", S.renderPublications(data.publications));
-    html = injectRegion(html, "certifications", S.renderCertifications(data.certifications));
-    html = injectRegion(html, "skills", S.renderSkills(data.skills));
-    html = injectRegion(html, "blogs-preview", S.renderBlogsPreview(data.blogs, 3));
+    html = injectRegion(html, "now", S.renderNow(data));
+    html = injectRegion(html, "study", S.renderEduBrief(data));
+    html = injectRegion(html, "work", S.renderWorkList(data));
+    html = injectRegion(html, "papers", S.renderPaperList(data));
     write(path.join(DIST, "index.html"), html);
   }
 

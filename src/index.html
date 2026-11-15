@@ -2,100 +2,67 @@
 <html lang="en">
   <head>
     {{> head }}
-    <title>{{ site.name }} — {{ site.tagline }}</title>
+    <title>{{ site.name }}</title>
     <meta name="description" content="{{ site.description }}" />
     <link rel="stylesheet" href="/styles/pages/landing.css" />
   </head>
   <body>
     {{> nav }}
 
-    <main>
-      <section class="container" id="hero">
-        <div class="hero">
-          <div>
-            <h1>{{ site.name }}</h1>
-            <p class="tagline">{{ site.tagline }}</p>
-            <div class="hero-ctas">
-              <a class="btn btn-primary" href="#about">Read more</a>
-              <a class="btn btn-ghost" href="/blogs/">Read the blog</a>
-              <a class="btn btn-ghost" href="/terminal/">Open terminal</a>
-              <a class="btn btn-ghost" href="/daw/">Open Music IDE</a>
-            </div>
-            <div class="socials">
-              {{#each site.socials}}
-              <a href="{{ this.href }}" target="_blank" rel="noopener" aria-label="{{ this.label }}" title="{{ this.label }}">
-                {{{ this.icon }}}
-              </a>
-              {{/each}}
-            </div>
-          </div>
-          {{#if site.avatar}}
-          <img class="hero-avatar" src="{{ site.avatar }}" alt="{{ site.name }}" />
-          {{/if}}
+    <main id="main">
+      <section class="mast" aria-labelledby="name">
+        <div class="mast-copy">
+          <p class="kicker">{{ site.kicker }}</p>
+          <h1 id="name">{{ site.name }}</h1>
+          <span class="mast-rule" aria-hidden="true"></span>
+          <p class="deck">{{ site.deck }}</p>
+          <p class="mast-links">
+            <a class="mast-go" href="/terminal/"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 9l3 3l-3 3"/><path d="M13 15l3 0"/><path d="M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -12"/></svg>Open the terminal</a>
+            {{#each site.socials}}
+            <a href="{{ this.href }}" target="_blank" rel="noopener">{{{ this.icon }}}{{ this.label }}</a>
+            {{/each}}
+          </p>
         </div>
+        <img
+          class="mast-photo"
+          src="/assets/img/profile.jpg"
+          width="176"
+          height="146"
+          alt="Arya Shah"
+        />
       </section>
 
-      <section class="container section" id="about" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>About</h2></div>
-        <div class="about-body">
-          <!-- inject:about -->
-          <!-- /inject:about -->
-        </div>
-      </section>
+      <div class="bands">
+        <section class="band" id="now" aria-labelledby="now-title">
+          <h2 id="now-title"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"/><path d="M12 12l0 .01"/><path d="M3 13a20 20 0 0 0 18 0"/></svg>Now</h2>
+          <!-- inject:now -->
+          <!-- /inject:now -->
+        </section>
 
-      <section class="container section" id="news" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>News</h2></div>
-        <!-- inject:news -->
-        <!-- /inject:news -->
-      </section>
+        <section class="band" id="education" aria-labelledby="education-title">
+          <h2 id="education-title"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></svg>Education</h2>
+          <!-- inject:study -->
+          <!-- /inject:study -->
+        </section>
 
-      <section class="container section" id="experience" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Experience</h2></div>
-        <!-- inject:experience -->
-        <!-- /inject:experience -->
-      </section>
+        <section class="band" id="work" aria-labelledby="work-title">
+          <h2 id="work-title"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 8l-4 4l4 4"/><path d="M17 8l4 4l-4 4"/><path d="M14 4l-4 16"/></svg>Work</h2>
+          <!-- inject:work -->
+          <!-- /inject:work -->
+        </section>
 
-      <section class="container section" id="projects" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Projects</h2></div>
-        <!-- inject:projects -->
-        <!-- /inject:projects -->
-      </section>
-
-      <section class="container section" id="publications" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Selected Publications</h2></div>
-        <!-- inject:publications -->
-        <!-- /inject:publications -->
-      </section>
-
-      <section class="container section" id="blogs" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Latest Writing</h2></div>
-        <!-- inject:blogs-preview -->
-        <!-- /inject:blogs-preview -->
-        <p style="margin-top: var(--sp-4)"><a href="/blogs/">See all posts →</a></p>
-      </section>
-
-      <section class="container section" id="skills" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Skills</h2></div>
-        <!-- inject:skills -->
-        <!-- /inject:skills -->
-      </section>
-
-      <section class="container section" id="education" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Education</h2></div>
-        <!-- inject:education -->
-        <!-- /inject:education -->
-      </section>
-
-      <section class="container section" id="certifications" data-reveal>
-        <div class="section-title"><span class="accent-bar"></span><h2>Certifications</h2></div>
-        <!-- inject:certifications -->
-        <!-- /inject:certifications -->
-      </section>
+        <section class="band" id="papers" aria-labelledby="papers-title">
+          <h2 id="papers-title"><svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h11a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-11a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1m3 0v18"/><path d="M13 8l2 0"/><path d="M13 12l2 0"/></svg>Papers</h2>
+          <!-- inject:papers -->
+          <!-- /inject:papers -->
+        </section>
+      </div>
     </main>
 
     {{> footer }}
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/gsap.min.js"></script>
     <script src="/scripts/theme.js"></script>
     <script src="/scripts/nav.js"></script>
-    <script src="/scripts/reveal.js"></script>
+    <script src="/scripts/enter.js"></script>
   </body>
 </html>

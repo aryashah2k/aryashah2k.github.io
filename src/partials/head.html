@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
   rel="stylesheet"
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,460;7..72,560&family=Martian+Mono:wght@400;500&family=Schibsted+Grotesk:wght@400;500;600&display=swap"
 />
 <link rel="stylesheet" href="/styles/main.css" />
 <script>
@@ -15,7 +15,7 @@
   (function () {
     try {
       var t = localStorage.getItem("theme");
-      if (!t) t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      if (!t) t = "dark";
       document.documentElement.setAttribute("data-theme", t);
     } catch (_) {}
   })();

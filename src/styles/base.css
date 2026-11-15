@@ -11,6 +11,10 @@ html {
   scroll-padding-top: calc(var(--nav-h) + var(--sp-4));
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 html, body { margin: 0; padding: 0; }
 
 body {
@@ -45,17 +49,19 @@ a:focus-visible, button:focus-visible, [tabindex="0"]:focus-visible {
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 var(--sp-3);
   line-height: var(--lh-tight);
-  font-weight: var(--fw-semibold);
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-medium);
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
   color: var(--fg);
+  text-wrap: balance;
 }
 
-h1 { font-size: var(--fs-4xl); letter-spacing: -0.02em; }
-h2 { font-size: var(--fs-3xl); letter-spacing: -0.015em; }
-h3 { font-size: var(--fs-xl); }
-h4 { font-size: var(--fs-lg); }
+h1 { font-size: var(--fs-4xl); letter-spacing: -0.03em; font-weight: var(--fw-medium); }
+h2 { font-size: var(--fs-2xl); letter-spacing: -0.02em; }
+h3 { font-size: var(--fs-xl); letter-spacing: -0.015em; }
+h4 { font-size: var(--fs-lg); letter-spacing: 0; }
 
-p { margin: 0 0 var(--sp-4); color: var(--fg); }
+p { margin: 0 0 var(--sp-4); color: var(--fg); text-wrap: pretty; }
 
 ul, ol { margin: 0 0 var(--sp-4); padding-left: var(--sp-6); }
 li + li { margin-top: var(--sp-1); }
@@ -83,12 +89,12 @@ pre code { background: none; padding: 0; border: 0; }
 hr { border: 0; height: 1px; background: var(--border); margin: var(--sp-8) 0; }
 
 blockquote {
-  border-left: 3px solid var(--accent);
-  padding: var(--sp-1) var(--sp-4);
   margin: var(--sp-4) 0;
+  padding: var(--sp-3) var(--sp-4);
   color: var(--fg-muted);
   background: var(--bg-elev);
-  border-radius: 0 var(--r-md) var(--r-md) 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
 }
 
 button {

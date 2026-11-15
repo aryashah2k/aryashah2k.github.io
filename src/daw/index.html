@@ -2,211 +2,243 @@
 <html lang="en">
   <head>
     {{> head }}
-    <title>Music IDE — {{ site.name }}</title>
-    <meta name="description" content="FL Studio-inspired portfolio view of music projects by {{ site.name }}." />
+    <title>Studio | {{ site.name }}</title>
+    <meta name="description" content="Studio chassis for {{ site.name }}. No project is loaded." />
     <link rel="stylesheet" href="/daw/styles.css" />
-    <style>
-      /* Scope DAW body styles so the shared nav stays visible on top. */
-      body.daw-page { display: flex; flex-direction: column; min-height: 100dvh; }
-      body.daw-page .toolbar { position: relative; }
-      body.daw-page .main-container { flex: 1; }
-    </style>
   </head>
   <body class="daw-page">
     {{> nav }}
 
-    <!-- Loading Screen -->
-    <div class="loading-screen">
-      <div class="loading-logo">ARYA'S STUDIO</div>
-      <div class="loading-bar">
+    <div class="loading-screen" role="status" aria-label="Studio">
+      <p class="loading-logo">Studio</p>
+      <div class="loading-bar" aria-hidden="true">
         <div class="loading-progress"></div>
       </div>
     </div>
 
     <header class="toolbar" role="banner">
-      <nav class="menu-bar" aria-label="DAW menu">
-        <div class="menu-item" tabindex="0">File</div>
-        <div class="menu-item" tabindex="0">Edit</div>
-        <div class="menu-item" tabindex="0">Add</div>
-        <div class="menu-item" tabindex="0">Patterns</div>
-        <div class="menu-item" tabindex="0">View</div>
-      </nav>
-
-      <div class="transport-controls" role="group" aria-label="Transport controls">
-        <button class="fl-button transport-btn stop" id="stopBtn" title="Stop (Enter)" aria-label="Stop">■</button>
-        <button class="fl-button transport-btn play" id="playBtn" title="Play (Space)" aria-label="Play">▶</button>
+      <div class="menu-bar" role="menubar" aria-label="DAW menu">
+        <span class="menu-item" role="menuitem" aria-disabled="true">File</span>
+        <span class="menu-item" role="menuitem" aria-disabled="true">Edit</span>
+        <span class="menu-item" role="menuitem" aria-disabled="true">Add</span>
+        <span class="menu-item" role="menuitem" aria-disabled="true">Patterns</span>
+        <span class="menu-item" role="menuitem" aria-disabled="true">View</span>
       </div>
 
-      <div class="lcd-display" aria-live="polite">
-        <div class="lcd-time" id="lcdTime">001:01:00</div>
-        <div class="cpu-meter">
+      <div class="transport-controls" role="group" aria-label="Transport">
+        <button type="button" class="transport-btn stop" id="stopBtn" aria-label="Stop">■</button>
+        <button type="button" class="transport-btn play" id="playBtn" aria-disabled="true" aria-label="Play, no project loaded" aria-describedby="transportStatus">▶</button>
+      </div>
+
+      <p class="transport-status" id="transportStatus" role="status" aria-live="polite"></p>
+
+      <div class="lcd-display">
+        <div class="lcd-time" id="lcdTime">000:00:00</div>
+        <div class="cpu-idle">
           <span class="cpu-label">CPU</span>
-          <canvas class="cpu-graph" id="cpuGraph" width="70" height="18" aria-hidden="true"></canvas>
+          <span class="cpu-idle-mark" aria-hidden="true"></span>
         </div>
       </div>
 
-      <div class="keyboard-hint" aria-hidden="true">
-        <span><kbd class="kbd">Space</kbd> Play</span>
-        <span><kbd class="kbd">Enter</kbd> Stop</span>
-      </div>
-
-      <div class="title-logo">{{ site.name }} | FL Projects</div>
+      <div class="title-logo">Studio</div>
     </header>
 
     <div class="main-container">
-      <aside class="browser" role="navigation" aria-label="Project browser">
-        <div class="browser-header">
-          <span class="browser-header-icon">📁</span>
-          Browser
-        </div>
+      <aside class="browser" aria-label="Browser">
+        <div class="browser-header">Browser</div>
         <div class="browser-content">
           <div class="folder open">
-            <div class="folder-header" tabindex="0" role="button" aria-expanded="true">
-              <span class="folder-icon">▶</span>
-              <span class="folder-name">
-                <span class="folder-emoji">🎹</span>
-                FL Projects
-              </span>
-            </div>
+            <button type="button" class="folder-header" aria-expanded="true">
+              <span class="folder-caret" aria-hidden="true"></span>
+              <span class="folder-name">Slots</span>
+            </button>
             <div class="folder-children" role="group">
-              <div class="file-item" id="openProjectsPanel" tabindex="0"
-                   style="background: rgba(248, 140, 0, 0.1); border-left-color: var(--btn-active);">
-                <span class="file-icon">📂</span>
-                <span class="file-name">Browse All Projects...</span>
-                <span class="file-badge" style="background: var(--btn-active);">NEW</span>
-              </div>
+              <button type="button" class="file-item" id="openSlots" aria-controls="channelRack">
+                <span class="file-mark" aria-hidden="true"></span>
+                <span class="file-name">Browse slots</span>
+              </button>
             </div>
           </div>
 
           <div class="folder open">
-            <div class="folder-header" tabindex="0" role="button" aria-expanded="true">
-              <span class="folder-icon">▶</span>
-              <span class="folder-name">
-                <span class="folder-emoji">👤</span>
-                My Profile
-              </span>
-            </div>
+            <button type="button" class="folder-header" aria-expanded="true">
+              <span class="folder-caret" aria-hidden="true"></span>
+              <span class="folder-name">Profile</span>
+            </button>
             <div class="folder-children" role="group">
-              <div class="file-item" id="bioFile" tabindex="0">
-                <span class="file-icon">📄</span>
+              <button type="button" class="file-item" id="bioFile">
+                <span class="file-mark" aria-hidden="true"></span>
                 <span class="file-name">Bio.txt</span>
-              </div>
-              <div class="file-item" id="resumeFile" tabindex="0">
-                <span class="file-icon">📑</span>
-                <span class="file-name">Resume.pdf</span>
-                <span class="file-badge">PDF</span>
-              </div>
+              </button>
+              <button type="button" class="file-item" id="resumeFile">
+                <span class="file-mark" aria-hidden="true"></span>
+                <span class="file-name">Resume</span>
+              </button>
             </div>
           </div>
 
           <div class="folder open">
-            <div class="folder-header" tabindex="0" role="button" aria-expanded="true">
-              <span class="folder-icon">▶</span>
-              <span class="folder-name">
-                <span class="folder-emoji">🔌</span>
-                Socials (VST)
-              </span>
-            </div>
+            <button type="button" class="folder-header" aria-expanded="true">
+              <span class="folder-caret" aria-hidden="true"></span>
+              <span class="folder-name">Socials</span>
+            </button>
             <div class="folder-children" role="group">
               {{#each site.socials}}
-              <div class="file-item" data-link="{{ this.href }}" tabindex="0">
-                <span class="file-icon">🔗</span>
-                <span class="file-name">{{ this.label }}.dll</span>
-              </div>
+              <a class="file-item" data-link="{{ this.href }}" href="{{ this.href }}" target="_blank" rel="noopener noreferrer">
+                <span class="file-mark" aria-hidden="true"></span>
+                <span class="file-name">{{ this.label }}</span>
+              </a>
               {{/each}}
             </div>
           </div>
         </div>
       </aside>
 
-      <main class="workspace" role="main">
-        <article class="fl-window" id="playlist" role="region" aria-label="Experience Timeline">
+      <main id="main" class="workspace" tabindex="-1">
+        <article class="fl-window" id="playlist" role="region" aria-label="Playlist">
           <header class="fl-window-header">
-            <span class="fl-window-title">
-              <span class="fl-window-title-icon">🎼</span>
-              Playlist - Experience Timeline
-            </span>
+            <span class="fl-window-title">Playlist</span>
             <div class="fl-window-controls">
-              <button class="window-btn minimize" aria-label="Minimize">−</button>
-              <button class="window-btn maximize" aria-label="Maximize">□</button>
+              <button type="button" class="window-btn minimize" aria-label="Minimize" disabled aria-disabled="true">−</button>
+              <button type="button" class="window-btn maximize" aria-label="Maximize" disabled aria-disabled="true">□</button>
             </div>
           </header>
-          <div class="fl-window-content" style="padding: 0;">
-            <div class="timeline-header">
-              <div class="track-labels"></div>
-              <div class="timeline-ruler">
-                <div class="ruler-bar">2020</div>
-                <div class="ruler-bar">2021</div>
-                <div class="ruler-bar">2022</div>
-                <div class="ruler-bar">2023</div>
-                <div class="ruler-bar">2024</div>
-                <div class="ruler-bar">2025</div>
+          <div class="fl-window-content">
+            <div class="arrangement">
+              <div class="arrangement-gutter" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="arrangement-lane">
+                <p class="arrangement-empty">No pattern loaded</p>
               </div>
             </div>
-            <div class="timeline-body" id="dawTimelineBody">
-              <!-- Tracks are populated at runtime from data embedded below. -->
+          </div>
+        </article>
+
+        <article class="fl-window" id="mixer" role="region" aria-label="Mixer">
+          <header class="fl-window-header">
+            <span class="fl-window-title">Mixer</span>
+            <div class="fl-window-controls">
+              <button type="button" class="window-btn minimize" aria-label="Minimize" disabled aria-disabled="true">−</button>
+              <button type="button" class="window-btn maximize" aria-label="Maximize" disabled aria-disabled="true">□</button>
+            </div>
+          </header>
+          <div class="fl-window-content">
+            <div class="mixer-container">
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 1</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">1</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 2</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">2</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 3</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">3</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 4</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">4</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 5</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">5</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 6</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">6</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 7</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">7</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 8</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">8</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 9</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">9</span>
+              </div>
+              <div class="mixer-channel">
+                <span class="channel-label">Ch 10</span>
+                <div class="channel-meter" aria-hidden="true"><div class="meter-fill"></div><div class="meter-segments"></div></div>
+                <div class="channel-fader" aria-hidden="true"><div class="fader-knob"></div></div>
+                <span class="channel-number">10</span>
+              </div>
             </div>
           </div>
         </article>
 
-        <article class="fl-window" id="mixer" role="region" aria-label="Skills Mixer">
+        <article class="fl-window" id="channelRack" role="region" aria-label="Channel rack">
           <header class="fl-window-header">
-            <span class="fl-window-title">
-              <span class="fl-window-title-icon">🎚️</span>
-              Mixer - Skills
-            </span>
+            <span class="fl-window-title">Channel rack</span>
             <div class="fl-window-controls">
-              <button class="window-btn minimize" aria-label="Minimize">−</button>
-              <button class="window-btn maximize" aria-label="Maximize">□</button>
+              <button type="button" class="window-btn minimize" aria-label="Minimize" disabled aria-disabled="true">−</button>
+              <button type="button" class="window-btn close" id="closeChannelRack" aria-label="Close">×</button>
             </div>
           </header>
-          <div class="fl-window-content" style="padding: 0;">
-            <div class="mixer-container" id="mixerContainer" role="img" aria-label="Skills visualization"></div>
-          </div>
-        </article>
-
-        <article class="fl-window" id="projectsPanel" role="region" aria-label="FL Studio Projects">
-          <header class="fl-window-header">
-            <span class="fl-window-title">
-              <span class="fl-window-title-icon">🎹</span>
-              Channel Rack - Projects
-            </span>
-            <div class="fl-window-controls">
-              <button class="window-btn minimize" aria-label="Minimize">−</button>
-              <button class="window-btn close" id="closeProjectsPanel" aria-label="Close">×</button>
+          <form class="slots-toolbar" id="slotsSearchForm" role="search">
+            <input type="search" class="slots-search" id="slotsSearch" placeholder="Search slots" aria-label="Search slots" autocomplete="off">
+            <p class="slots-count" id="slotsCount">4 empty slots</p>
+          </form>
+          <div class="fl-window-content">
+            <div class="slots-grid" id="slotsGrid">
+              <article class="slot-card" data-slot="empty slot 1 no audio file">
+                <h3>Empty slot 1</h3>
+                <p>No audio file</p>
+              </article>
+              <article class="slot-card" data-slot="empty slot 2 no audio file">
+                <h3>Empty slot 2</h3>
+                <p>No audio file</p>
+              </article>
+              <article class="slot-card" data-slot="empty slot 3 no audio file">
+                <h3>Empty slot 3</h3>
+                <p>No audio file</p>
+              </article>
+              <article class="slot-card" data-slot="empty slot 4 no audio file">
+                <h3>Empty slot 4</h3>
+                <p>No audio file</p>
+              </article>
             </div>
-          </header>
-          <div class="projects-toolbar">
-            <div class="projects-search">
-              <span class="projects-search-icon">🔍</span>
-              <input type="text" class="projects-search-input" id="projectsSearchInput"
-                     placeholder="Search by name, genre, or tag..." autocomplete="off">
-            </div>
-            <div class="projects-count">
-              Showing <span id="projectsCount">0</span> projects
-            </div>
-          </div>
-          <div class="fl-window-content" style="padding: 0;">
-            <div class="projects-grid" id="projectsGrid"></div>
           </div>
         </article>
 
         <article class="fl-window" id="notepad" role="dialog" aria-labelledby="notepadTitle" aria-hidden="true">
           <header class="fl-window-header">
-            <span class="fl-window-title" id="notepadTitle">
-              <span class="fl-window-title-icon">📝</span>
-              Bio.txt
-            </span>
+            <span class="fl-window-title" id="notepadTitle">Bio.txt</span>
             <div class="fl-window-controls">
-              <button class="window-btn close" id="closeNotepad" aria-label="Close">×</button>
+              <button type="button" class="window-btn close" id="closeNotepad" aria-label="Close">×</button>
             </div>
           </header>
-          <div class="fl-window-content notepad-content">
-            <p>Hi, I'm <strong>{{ site.name }}</strong>.</p>
-            <br>
-            <p>{{ site.tagline }}</p>
-            <br>
-            <p style="color: #888; font-size: 0.9rem;">📍 {{ site.location }}</p>
+          <div class="fl-window-content">
+            <div class="notepad-content" id="notepadBody">
+              <p>Hi, I'm <strong>{{ site.name }}</strong>.</p>
+              <p>{{ site.tagline }}</p>
+              <p class="notepad-meta">{{ site.location }}</p>
+            </div>
           </div>
         </article>
       </main>
@@ -214,6 +246,7 @@
 
     <script src="/scripts/theme.js"></script>
     <script src="/scripts/nav.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.1/dist/gsap.min.js"></script>
     <script src="/daw/app.js"></script>
   </body>
 </html>

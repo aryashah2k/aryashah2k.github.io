@@ -1,8 +1,8 @@
 ---
-degree: M.Tech in Artificial Intelligence
+degree: M.Tech, Artificial Intelligence
 school: IIT Gandhinagar
-location: Gandhinagar, India
-start: 2024-07
-end: ""
+location: ""
+start: 2024-08
+end: 2026-06
+featured: true
 ---
-Department of Computer Science and Engineering. **CPI: 10.**

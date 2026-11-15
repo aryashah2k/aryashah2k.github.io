@@ -1,49 +1,37 @@
 ---
 name: Arya Shah
-tagline: AI Engineer & Researcher at IIT Gandhinagar — building ML systems, writing papers, and making music on the side.
-description: Arya Shah — AI Engineer & Researcher. Machine learning, NLP, computer vision, and the occasional synth.
+kicker: Senior AI engineer
+tagline: Senior AI engineer at Aistra Labs in Mumbai.
+deck: Senior AI engineer at Aistra Labs in Mumbai. Voice AI, multi-agent orchestration, and LLM safety.
+description: Arya Shah is a senior AI engineer. Voice AI, multi-agent orchestration, and LLM safety.
 avatar: /assets/img/profile.jpg
-location: Gandhinagar, India
+location: Mumbai, India
 email: arya.shah@iitgn.ac.in
 nav:
-  - { label: About,         href: "/#about" }
-  - { label: Experience,    href: "/#experience" }
-  - { label: Projects,      href: "/#projects" }
-  - { label: Publications,  href: "/#publications" }
-  - { label: Blog,          href: "/blogs/" }
-  - { label: Terminal,      href: "/terminal/" }
-  - { label: Music IDE,     href: "/daw/" }
+  - { label: Work, href: "/#work" }
+  - { label: Notes, href: "/blogs/" }
+  - { label: Terminal, href: "/terminal/" }
+  - { label: Studio, href: "/daw/" }
 socials:
   - label: GitHub
     href: https://github.com/aryashah2k
-    icon: |
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12a10 10 0 0 0 6.84 9.5c.5.1.68-.22.68-.48v-1.68c-2.78.6-3.37-1.34-3.37-1.34-.45-1.14-1.1-1.45-1.1-1.45-.9-.62.07-.6.07-.6 1 .07 1.53 1.04 1.53 1.04.89 1.52 2.34 1.08 2.9.83.09-.65.35-1.08.64-1.33-2.22-.25-4.55-1.11-4.55-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.69.92.69 1.86v2.77c0 .26.18.58.69.48A10 10 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"/></svg>'
   - label: LinkedIn
     href: https://www.linkedin.com/in/arya--shah/
-    icon: |
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 20.5V9.5H3.5V20.5H6.94ZM5.22 8.12C6.31 8.12 7.19 7.24 7.19 6.16C7.19 5.08 6.31 4.2 5.22 4.2C4.14 4.2 3.26 5.08 3.26 6.16C3.26 7.24 4.14 8.12 5.22 8.12ZM20.5 20.5H17.06V14.7C17.06 13.32 17.03 11.56 15.13 11.56C13.2 11.56 12.9 13.04 12.9 14.6V20.5H9.46V9.5H12.76V10.94H12.81C13.27 10.08 14.37 9.17 16.01 9.17C19.44 9.17 20.5 11.42 20.5 14.06V20.5Z"/></svg>
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 1 0 -4 0"/><path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4z"/></svg>'
   - label: Scholar
     href: https://scholar.google.com/citations?user=bURGVj0AAAAJ&hl=en
-    icon: |
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l9 5-9 5-9-5 9-5z"/><path d="M4 13v3a8 3 0 0 0 16 0v-3" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -14"/><path d="M9 5a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -14"/><path d="M5 8h4"/><path d="M9 16h4"/><path d="M13.803 4.56l2.184 -.53c.562 -.135 1.133 .19 1.282 .732l3.695 13.418a1.02 1.02 0 0 1 -.634 1.219l-.133 .041l-2.184 .53c-.562 .135 -1.133 -.19 -1.282 -.732l-3.695 -13.418a1.02 1.02 0 0 1 .634 -1.219l.133 -.041"/><path d="M14 9l4 -1"/><path d="M16 16l3.923 -.98"/></svg>'
   - label: Twitter
     href: https://x.com/aryashah2k
-    icon: |
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h4.5l4 5.5L17 4h3l-5.5 7.5L21 20h-4.5l-4.5-6L7 20H4l6.5-8.5L4 4z"/></svg>
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>'
   - label: Kaggle
     href: https://kaggle.com/aryashah2k
-    icon: |
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 4v16h3v-6l6 6h4l-7.5-7.5L19 6h-4l-6 6V4H6z"/></svg>
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.875 6.27a2.225 2.225 0 0 1 1.125 1.948v7.284c0 .809 -.443 1.555 -1.158 1.948l-6.75 4.27a2.269 2.269 0 0 1 -2.184 0l-6.75 -4.27a2.225 2.225 0 0 1 -1.158 -1.948v-7.285c0 -.809 .443 -1.554 1.158 -1.947l6.75 -3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98h-.033"/><path d="M10 8v8"/><path d="M14 8l-2.5 4l2.5 4"/><path d="M10 12h1.5"/></svg>'
   - label: HuggingFace
     href: https://huggingface.co/aryashah00
-    icon: |
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1.1" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.1" fill="currentColor" stroke="none"/><path d="M8 14.5c1 1.3 2.4 2 4 2s3-.7 4-2"/><path d="M6.5 13.5c-.8 0-1.4.7-1.4 1.5s.6 1.5 1.4 1.5"/><path d="M17.5 13.5c.8 0 1.4.7 1.4 1.5s-.6 1.5-1.4 1.5"/></svg>
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 10l.01 0"/><path d="M15 10l.01 0"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>'
   - label: Email
     href: mailto:arya.shah@iitgn.ac.in
-    icon: |
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
-footerLinks:
-  - { label: GitHub,   href: https://github.com/aryashah2k }
-  - { label: LinkedIn, href: https://www.linkedin.com/in/arya--shah/ }
-  - { label: Scholar,  href: "https://scholar.google.com/citations?user=bURGVj0AAAAJ&hl=en" }
+    icon: '<svg class="ico" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>'
 ---

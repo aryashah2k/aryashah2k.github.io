@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     {{> head }}
-    <title>{{ post.title }} — {{ site.name }}</title>
+    <title>{{ post.title }} | {{ site.name }}</title>
     <meta name="description" content="{{ post.summary }}" />
     <link rel="stylesheet" href="/styles/pages/blog.css" />
     <!-- KaTeX (auto-rendered) for Markdown math support -->
@@ -11,8 +11,8 @@
   <body>
     {{> nav }}
 
-    <main class="container container-sm">
-      <a class="post-back" href="/blogs/">← All posts</a>
+    <main id="main" class="container blog-post">
+      <a class="post-back" href="/blogs/">All notes</a>
 
       <header class="post-header">
         <h1>{{ post.title }}</h1>
